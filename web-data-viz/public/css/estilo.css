@@ -15,74 +15,91 @@ body {
   --tamanho-footer: 65px;
 }
 
-.container {
-  display: flex;
-  width: 80%;
-  margin: auto;
-}
-
 .header {
-    background-color: #373633;
-    padding: 20px 0;
+  background-color: #3a3835;
+  padding: 10px 0;
 }
 
 .header .container {
-    width: 80%;
-    max-width: 1100px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: none;     /* tira o limite de largura */
+  margin: 0;           /* tira a centralização */
+  padding: 0 20px;     /* distância da borda da tela */
+  box-sizing: border-box;
+}
+
+.container-texto {
+  display: block;          /* blocos um embaixo do outro */
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* logo + título */
+.identidade {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  height: 56px;
+  width: auto;
+  display: block;
 }
 
 .titulo {
-    font-family: "Cormorant Garamond", serif;
-    font-size: 30px;
-    font-weight: 600;
-    color: #F2EBDD;
-    margin: 0;
+  margin: 0;
+  font-family: "Times New Roman", serif;
+  font-size: 26px;
+  color: #f5efe6;
 }
 
+/* menu */
 .navbar {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.navbar li {
-    color: #A49A85;
-    font-family: "Libre Franklin", sans-serif;
-    font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  color: #f5efe6;
+  font-size: 15px;
 }
 
 .navbar a {
-    color: #F2EBDD;
-    text-decoration: none;
-    font-family: "Libre Franklin", sans-serif;
-    font-size: 14px;
-    transition: color 0.3s;
+  display: inline-block;  
+  color: #f5efe6;
+  text-decoration: none;
+  font-size: 15px;
+  padding: 8px 14px;
+  border-radius: 10px;       
+  transition: background-color 0.2s;
 }
 
+/* ao passar o mouse */
 .navbar a:hover {
-    color: #D8CBB7;
+  background-color: #A49A85;
 }
 
+/* no clique e enquanto o link está focado */
+.navbar a:active,
+.navbar a:focus {
+  background-color: #A49A85;
+  color: #ffffff;
+  outline: none;
+}
+
+/* página atual */
 .navbar .agora a {
-    border-bottom: 1px solid #D8CBB7;
-    padding-bottom: 5px;
+  background-color: #A49A85;
+  color: #ffffff;
 }
 
-.titulo {
-  color:#F2EBDD;
-  width: fit-content;
-  font-weight: 500;
-  font-family: "Cormorant Garamond", serif;
-}
-
-.header h1 {
+.header h1, h2 {
   margin: 0;
 }
 
@@ -92,11 +109,7 @@ body {
     padding: 70px 0;
 }
 
-.container {
-    width: 80%;
-    max-width: 1100px;
-    margin: 0 auto;
-}
+
 
 .conteudo-historia {
     display: flex;
@@ -118,6 +131,15 @@ body {
     margin-bottom: 20px;
     padding: 10px;
 }
+.texto-lateral h2 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 30px;
+    font-weight: 500;
+    color: #373633;
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding: 10px;
+}
 
 .texto-historia {
     font-family: "Libre Franklin", sans-serif;
@@ -127,12 +149,22 @@ body {
     margin: 0;
 }
 
+/* título "Os 4 álbuns" */
+.titulo-secao {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 40px;
+  font-weight: 500;
+  color: #373633;
+  margin: 0 0 40px;
+  padding: 10px;
+}
+
 .imagem-historia {
     flex: 1;
 }
 
 .imagem-historia img {
-    width: 100%;
+    width: 90%;
     display: block;
     object-fit: cover;
 }
