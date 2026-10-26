@@ -6,12 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>AquaTech | Login</title>
+    <title>The Smiths Archive | Login</title>
 
     <script src="./js/sessao.js"></script>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;800&family=Cormorant+Garamond:wght@500&family=Libre+Franklin:wght@400;800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="./css/estilo.css">
-    <link rel="icon" href="./assets/icon/favicon2.ico">
+    <link rel="icon" href="./assets/icon/icon-the-smiths.ico">
     <link rel="preconnect" href="https://fonts.gstatic.com">
 </head>
 
@@ -21,18 +26,18 @@
 
     <div class="header">
         <div class="container">
-            <h1 class="titulo">AquaTech</h1>
+            <div class="identidade">
+                <img src="./assets/icon/the_smiths_branco_fino.png" alt="Logo" class="logo">
+                <h1 class="titulo">The Smiths Archive</h1>
+            </div>
             <ul class="navbar">
                 <li>
-                    <a href="index.html">Inicial</a>
-                </li>
-                <li>
-                    <a href="simulador.html">Simulador</a>
+                    <a href="index.html">Home</a>
                 </li>
                 <li>|</li>
                 <li class="agora">
-                    <a href="#">Login</a>
-                </li>
+                    <a href="login.html">Login</a>
+                </li>|
                 <li>
                     <a href="cadastro.html">Cadastro</a>
                 </li>
@@ -47,7 +52,7 @@
                 <span id="mensagem_erro"></span>
             </div>
         </div>
-        <div class="container">
+        <div class="container-login">
             <div class="card card-login">
                 <h2>Olá de volta!</h2>
                 <div class="formulario">
@@ -63,7 +68,7 @@
                 </div>
 
                 <div id="div_aguardar" class="loading-div">
-                    <img src="./assets/circle-loading.gif" id="loading-gif">
+                    <img src="./assets/loading.gif" id="loading-gif">
                 </div>
 
                 <div id="div_erros_login"></div>
@@ -74,11 +79,12 @@
     <!--footer inicio-->
     <div class="footer">
         <div class="container">
-            <h4>Feito com amor por aluno &hearts; SPTech &copy; 2023-2026</h4>
+            <h4>Feito com amor por Bianca Ramos da Silva &hearts; SPTech &copy; 2026/2</h4>
+        </div>
+        <div class="container-texto">
+            <h4>&copy; 2026 The Smiths. All rights reserved.</h4>
         </div>
     </div>
-    <!--footer fim-->
-
 </body>
 
 </html>
@@ -94,7 +100,7 @@
 
         if (emailVar == "" || senhaVar == "") {
             cardErro.style.display = "block"
-            mensagem_erro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
+            mensagem_erro.innerHTML = "Preencha todos os dados!";
             finalizarAguardar();
             return false;
         }

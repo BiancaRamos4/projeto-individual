@@ -1,23 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
 body {
+  height: 100%;
   margin: 0;
   padding: 0;
-  font-family: "Libre Franklin", sans-serif;;
+  font-family: "Libre Franklin", sans-serif;
   background-color: #F2EBDD;
 }
 
 :root {
-  --tamanho-header: 80px;
-  --tamanho-banner: calc(100vh - var(--tamanho-header) - var(--tamanho-footer) - 2px);
-  --tamanho-simulador: calc(100vh - var(--tamanho-header) - var(--tamanho-footer) - 2px);
-  --tamanho-login: calc(100vh - var(--tamanho-header) - var(--tamanho-footer) - 2px);
-  --tamanho-footer: 65px;
+  --tamanho-header: 65px;
+  --tamanho-banner: calc(100vh - var(--tamanho-header) - var(--tamanho-footer));
+  --tamanho-simulador: calc(100vh - var(--tamanho-header) - var(--tamanho-footer));
+  --tamanho-login: calc(100vh - var(--tamanho-header) - var(--tamanho-footer));
+  --tamanho-footer: 100px;
 }
 
 .header {
   background-color: #3a3835;
   padding: 10px 0;
+  border-bottom: solid #B8B2A8;
 }
 
 .header .container {
@@ -25,14 +25,14 @@ body {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  max-width: none;     /* tira o limite de largura */
-  margin: 0;           /* tira a centralização */
-  padding: 0 20px;     /* distância da borda da tela */
+  max-width: none;
+  margin: 0;
+  padding: 0 20px;
   box-sizing: border-box;
 }
 
 .container-texto {
-  display: block;          /* blocos um embaixo do outro */
+  display: block;
   max-width: 1100px;
   margin: 0 auto;
   padding: 0 20px;
@@ -71,12 +71,12 @@ body {
 }
 
 .navbar a {
-  display: inline-block;  
+  display: inline-block;
   color: #f5efe6;
   text-decoration: none;
   font-size: 15px;
   padding: 8px 14px;
-  border-radius: 10px;       
+  border-radius: 10px;
   transition: background-color 0.2s;
 }
 
@@ -99,54 +99,56 @@ body {
   color: #ffffff;
 }
 
-.header h1, h2 {
+.header h1,
+h2 {
   margin: 0;
 }
 
 
 .banner {
-    background-color: #F2EBDD;
-    padding: 70px 0;
+  background-color: #F2EBDD;
+  padding: 70px 0;
 }
 
 
 
 .conteudo-historia {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
 }
 
 .texto-lateral {
-    flex: 1;
+  flex: 1;
 }
 
 .texto-lateral h1 {
-    font-family: "Cormorant Garamond", serif;
-    font-size: 48px;
-    font-weight: 500;
-    color: #373633;
-    margin-top: 0;
-    margin-bottom: 20px;
-    padding: 10px;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 48px;
+  font-weight: 500;
+  color: #373633;
+  margin-top: 0;
+  margin-bottom: 20px;
+  padding: 10px;
 }
+
 .texto-lateral h2 {
-    font-family: "Cormorant Garamond", serif;
-    font-size: 30px;
-    font-weight: 500;
-    color: #373633;
-    margin-top: 0;
-    margin-bottom: 20px;
-    padding: 10px;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 30px;
+  font-weight: 500;
+  color: #373633;
+  margin-top: 0;
+  margin-bottom: 20px;
+  padding: 10px;
 }
 
 .texto-historia {
-    font-family: "Libre Franklin", sans-serif;
-    font-size: 16px;
-    line-height: 1.9;
-    color: #55524D;
-    margin: 0;
+  font-family: "Libre Franklin", sans-serif;
+  font-size: 16px;
+  line-height: 1.9;
+  color: #55524D;
+  margin: 0;
 }
 
 /* título "Os 4 álbuns" */
@@ -160,13 +162,13 @@ body {
 }
 
 .imagem-historia {
-    flex: 1;
+  flex: 1;
 }
 
 .imagem-historia img {
-    width: 90%;
-    display: block;
-    object-fit: cover;
+  width: 90%;
+  display: block;
+  object-fit: cover;
 }
 
 
@@ -177,50 +179,60 @@ body {
 /* FOOTER */
 
 .footer {
+  margin-top: auto;
   background-color: #D8CBB7;
-  height: 150px;
+  height: 100px;
   color: #373633;
   display: flex;
+  flex-direction: column;
+  /* um embaixo do outro */
+  justify-content: center;
+  /* centraliza na vertical */
+  align-items: center;
+  /* centraliza na horizontal */
   font-size: 15px;
+  border-top: solid #B8B2A8;
 }
 
 .footer .container {
-  justify-content: center;
   text-align: center;
 }
 
-.footer .container .version {
-  font-size: 12px;
+.footer h4,
+.footer p {
+  margin: 4px 0;
 }
 
 /* LOGIN */
 
 .login {
   height: var(--tamanho-login);
-  background-image: url('../assets/imgs/bg-jelly-fish-para-home.png');
   background-size: cover;
+  flex: 1;
 }
 
-.login .container {
+.login .container-login {
+  display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
 }
 
-.card {
+.card-login {
   width: 50%;
-  background-color: #e5e5e5;
+  background-color: #D8CBB7;
   border-radius: 10px;
+  border: solid;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  color: palevioletred;
+  color: #373633;
   flex-direction: column;
   height: fit-content;
   padding: 20px 0;
 }
 
-.card h2 {
+.card-login h2 {
   margin: 0;
   font-size: 30px;
 }
@@ -239,7 +251,7 @@ body {
 }
 
 .formulario input {
-  border: 2px solid #32b9cd;
+  border: 2px solid #B8B2A8;
   text-align: center;
   border-radius: 10px;
   margin: 0;
@@ -270,7 +282,7 @@ body {
   font-weight: 600;
   font-size: 18px;
   color: #fff;
-  background-color: #ED145B;
+  background-color: #373633;
   width: 120px;
   height: 30px;
   align-self: center;
@@ -293,24 +305,46 @@ body {
 
 /* FORMULARIO */
 
-.alerta_erro{
+
+.card-cadastro {
+  width: 50%;
+  background-color: #D8CBB7;
+  border-radius: 10px;
+  border: solid;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  color: #373633;
+  flex-direction: column;
+  height: fit-content;
+  padding: 20px 0;
+}
+
+.login .container-cadastro {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.alerta_erro {
   display: flex;
   justify-content: flex-end;
 }
 
 .card_erro {
   display: none;
-  background-color: #fff;
-  color: black;
+  background-color: #D8CBB7;
+  color: #373633;
   width: 230px;
   position: fixed;
   border-radius: 4px;
-  border: #ED145B 3px solid;
+  border: #B8B2A8 3px solid;
   padding: 10px;
   margin-right: 10%;
 }
 
-.card_erro #mensagem_erro{
+.card_erro #mensagem_erro {
   font-weight: 500;
   font-size: 20px;
 }
@@ -366,7 +400,7 @@ input {
 
 .simulador .container {
   flex-direction: column;
-  overflow: scroll; 
+  overflow: scroll;
   height: var(--tamanho-simulador);
 }
 
@@ -410,9 +444,23 @@ input {
 }
 
 @keyframes bell {
-  0%   {transform: rotate(25deg)}
-  25%  {transform: rotate(-25deg)}
-  50%  {transform: rotate(25deg)}
-  75%  {transform: rotate(-25deg)}
-  100% {transform: rotate(25deg)}
+  0% {
+    transform: rotate(25deg)
+  }
+
+  25% {
+    transform: rotate(-25deg)
+  }
+
+  50% {
+    transform: rotate(25deg)
+  }
+
+  75% {
+    transform: rotate(-25deg)
+  }
+
+  100% {
+    transform: rotate(25deg)
+  }
 }
