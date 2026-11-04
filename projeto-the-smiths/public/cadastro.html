@@ -104,16 +104,24 @@
   // Array para armazenar empresas cadastradas para validação de código de ativação 
   let listaEmpresasCadastradas = [];
 
-  function cadastrar() {
-    // aguardar();
+ function cadastrar() {
+      let nome = ipt_nome.value.trim();
+      let email = ipt_email.value.trim();
+      let senha = ipt_senha.value.trim();
+      let confirmarSenha = ipt_confirmarSenha.value.trim();
 
-    //Recupere o valor da nova input pelo nome do id
-    // Agora vá para o método fetch logo abaixo
-    var nomeVar = nome_input.value;
-    var emailVar = email_input.value;
-    var senhaVar = senha_input.value;
-    var confirmacaoSenhaVar = confirmacao_senha_input.value;
-    var codigoVar = codigo_input.value;
+      let nomeInvalido = true;
+      let emailInvalido = true;
+      let tem1arroba = false;
+      let senhaInvalida = true;
+      let cfmSenhaInvalido = true;
+
+      let temMaius = false;
+      let temMinus = false;
+      let temNum = false;
+      let temSimb = false;
+      let numerosPermitidos = "0123456789";
+      let simbolos = "!@#$%&*_-./";
 
     // Verificando se há algum campo em branco
     if (
@@ -132,6 +140,69 @@
     } else {
       setInterval(sumirMensagem, 5000);
     }
+
+          // nome
+      let nomeSoLetras = true;
+      for (let i = 0; i < nome.length; i++) {
+        let c = nome[contarNome];
+        if (c !== " " && c.toLowerCase() === c.toUpperCase()) nomeSoLetras = false;
+      }
+
+      if (nome.length >= 3 && nome.length <= 45 && nomeSoLetras) {
+        nomeInvalido = false;
+        div_nomeInvalido.innerHTML = "";
+      } else {
+        div_nomeInvalido.innerHTML = "Digite um nome válido.";
+      }
+
+      // email
+      if (!email.includes(" ") && email.split("@").length == 2 && (
+        email.endsWith("@gmail.com") ||
+        email.endsWith("@hotmail.com") ||
+        email.endsWith("@outlook.com") ||
+        email.endsWith("@sptech.school")
+      )) {
+        emailInvalido = false;
+        div_emailInvalido.innerHTML = "";
+      } else {
+        div_emailInvalido.innerHTML = "Digite um email válido.";
+      }
+
+      for (let i = 0; i < senha.length; i++) {
+        let caractere = senha[contarCaractere];
+        if (caractere >= "A" && caractere <= "Z") temMaius = true;
+        if (caractere >= "a" && caractere <= "z") temMinus = true;
+        if (numerosPermitidos.includes(caractere)) temNum = true;
+        if (simbolos.includes(caractere)) temSimb = true;
+      }
+
+      // senha
+      if (temMaius && temMinus && temNum && temSimb && senha.length >= 8 && senha.length <= 45) {
+        div_forte.innerHTML = "Senha forte";
+        senhaInvalida = false;
+        div_fraca.innerHTML = "";
+      } else {
+        div_fraca.innerHTML = "Senha fraca";
+        senhaInvalida = true;
+        div_forte.innerHTML = "";
+      }
+
+      // confirmar senha
+      if (confirmarSenha === senha && senha !== "") {
+        cfmSenhaInvalido = false;
+        div_senhaDif.innerHTML = ""
+        div_msg.innerHTML = ""
+      } else {
+        div_senhaDif.innerHTML = "As senhas são diferentes.";
+        div_msg.innerHTML = ""
+      }
+
+      if (emailInvalido || senhaInvalida) {
+        div_msg.innerHTML = "Preencha  os dados corretamente."
+      }
+    }
+
+   
 
     // Enviando o valor da nova input
     fetch("/usuarios/cadastrar", {
@@ -172,7 +243,7 @@
       });
 
     return false;
-  }
+  
 
   // Listando empresas cadastradas 
   function listar() {

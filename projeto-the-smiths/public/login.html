@@ -95,8 +95,8 @@
     function entrar() {
         aguardar();
 
-        var emailVar = email_input.value;
-        var senhaVar = senha_input.value;
+        var emailVar = email_input.value.trim();
+        var senhaVar = senha_input.value.trim();
 
         if (emailVar == "" || senhaVar == "") {
             cardErro.style.display = "block"
@@ -110,6 +110,28 @@
 
         console.log("FORM LOGIN: ", emailVar);
         console.log("FORM SENHA: ", senhaVar);
+
+        if (tentativas < 1) {
+            div_msg.innerHTML = "Bloqueado temporariamente por excesso de tentativas";
+            div_msgCerto.innerHTML = "";
+        } else {
+            let loginValido = 0
+
+            if (loginValido) {
+                div_msg.innerHTML = "";
+                div_msgCerto.innerHTML = "Entrou";
+            } else {
+                tentativas--;
+                div_msgCerto.innerHTML = "";
+
+                if (tentativas > 0) {
+                    div_msg.innerHTML = `Login incorreto, tente novamente (Restam ${tentativas} tentativas)`;
+                } else {
+                    div_msg.innerHTML = "Bloqueado temporariamente por excesso de tentativas";
+                }
+            }
+        }
+
 
         fetch("/usuarios/autenticar", {
             method: "POST",
