@@ -3,7 +3,11 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Libre Franklin", sans-serif;
-  background-color: #F2EBDD;
+  background-image: url(..//assets/fundo-login-e-cadastro.jpg); 
+}
+
+body .pagina-home {
+  background-image: url(../assets/fundo-tela-home.jpg);
 }
 
 :root {
@@ -180,9 +184,9 @@ h2 {
 
 .footer {
   margin-top: auto;
-  background-color: #D8CBB7;
-  height: 100px;
-  color: #373633;
+  background-color: #373633;
+  height: 100px;    
+  color: #D8CBB7;
   display: flex;
   flex-direction: column;
   /* um embaixo do outro */
