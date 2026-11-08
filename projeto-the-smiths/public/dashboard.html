@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>The Smiths Archive | Dashboard</title>
+
+  <script src="./js/sessao.js"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;800&family=Cormorant+Garamond:wght@500&family=Libre+Franklin:wght@400;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../css/estilo.css">
+  <link rel="icon" href="./assets/icon/icon-the-smiths.ico">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <script>exigirLogin();</script>
+</head>
+<body>
+ <body>
+  <div class="header">
+    <div class="container">
+      <div class="identidade">
+        <img src="./assets/icon/the_smiths_branco_fino.png" alt="Logo" class="logo">
+        <h1 class="titulo">The Smiths Archive</h1>
+       </div>
+        <ul class="navbar">
+        <li>
+        <a href="index.html">Home</a>
+        </li>|
+        <li>
+            <a href="login.html">Login</a>
+        </li>|
+        <li class="so-deslogado, agora">
+            <a href="cadastro.html">Cadastro</a>
+        </li>
+        <li class="so-logado">
+            <a href="formulario.html">Formulário</a>
+        </li>
+        <li class="so-logado">
+            <a href="dashboard.html">Dashboard</a>
+        </li>
+        <li class="so-logado">
+            <a href="#" onclick="limparSessao(); return false;">Sair</a>
+        </li>
+       </ul>
+       <script>ajustarNavbar();</script>
+    </div>
+ </div>
+
+  <!--header fim-->
+
+  <section class="dash-smiths">
+    <div class="dash-container">
+      <h2 class="dash-titulo">Olá, <span id="nomeUsuario"></span>!</h2>
+      <p class="dash-sub" id="dashSub">Veja como os álbuns do The Smiths combinam com o seu gosto musical.</p>
+
+      <div class="dash-kpis">
+        <div class="dash-kpi">
+          <span class="dash-kpi-rotulo">Mais compatível</span>
+          <strong class="dash-kpi-valor" id="kpiMais">-</strong>
+          <span class="dash-kpi-detalhe" id="kpiMaisPct"></span>
+        </div>
+        <div class="dash-kpi">
+          <span class="dash-kpi-rotulo">Menos compatível</span>
+          <strong class="dash-kpi-valor" id="kpiMenos">-</strong>
+          <span class="dash-kpi-detalhe" id="kpiMenosPct"></span>
+        </div>
+      </div>
+
+      <div class="dash-card">
+        <h3>Ranking dos álbuns</h3>
+        <div class="dash-grafico">
+          <canvas id="myChart" role="img" aria-label="Gráfico de barras com a pontuação de cada álbum do The Smiths, do mais ao menos compatível"></canvas>
+        </div>
+      </div>
+
+      <div class="dash-acoes">
+        <button class="botao" onclick="window.location.href = 'formulario.html'">Refazer formulário</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">
+    <div class="container">
+      <h4>Feito com amor por Bianca Ramos da Silva &hearts; SPTech &copy; 2026/2</h4>
+    </div>
+    <div class="container-texto">
+      <h4>&copy; 2026 The Smiths. All rights reserved.</h4>
+    </div>
+  </div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1"></script>
+<script>
+  nomeUsuario.textContent = sessionStorage.NOME_USUARIO;
+
+  function carregarDashboard() {
+    fetch("/pontuacoes/listar/" + sessionStorage.ID_USUARIO)
+      .then(function (resposta) {
+        if (resposta.status === 204) {
+          // ainda não respondeu o formulário
+          window.location.href = "formulario.html";
+          return null;
+        }
+        if (!resposta.ok) {
+          throw new Error("Erro ao buscar os dados: " + resposta.status);
+        }
+        return resposta.json();
+      })
+      .then(function (dados) {
+        if (dados) {
+          preencherCards(dados);
+          plotarGrafico(dados);
+        }
+      })
+      .catch(function (erro) {
+        console.log("#ERRO: " + erro);
+        dashSub.textContent = "Não foi possível carregar os seus dados.";
+      });
+  }
+
+  // dados chegam ordenados do maior para o menor: [{ album, pontos }, ...]
+  function preencherCards(dados) {
+    const soma = dados.reduce((total, d) => total + d.pontos, 0);
+    const mais = dados[0];
+    const menos = dados[dados.length - 1];
+
+    kpiMais.textContent = mais.album;
+    kpiMaisPct.textContent = mais.pontos + " pontos (" + Math.round(mais.pontos / soma * 100) + "%)";
+    kpiMenos.textContent = menos.album;
+    kpiMenosPct.textContent = menos.pontos + " pontos (" + Math.round(menos.pontos / soma * 100) + "%)";
+  }
+
+  function plotarGrafico(dados) {
+    const soma = dados.reduce((total, d) => total + d.pontos, 0);
+
+    Chart.defaults.color = "#373633";
+    Chart.defaults.font.family = '"Libre Franklin", sans-serif';
+
+    const labels = dados.map(d => d.album);
+
+    // do mais escuro (mais compatível) ao mais claro (menos compatível)
+    const cores = ["#373633", "#55524D", "#7D7566", "#A49A85"];
+
+    const data = {
+      labels: labels,
+      datasets: [{
+        label: "Pontos",
+        backgroundColor: cores,
+        borderColor: cores,
+        data: dados.map(d => d.pontos),
+        borderRadius: 6,
+      }]
+    };
+
+    const config = {
+      type: "bar",
+      data: data,
+      options: {
+        indexAxis: "y",
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: function (ctx) {
+                return ctx.parsed.x + " pontos (" + Math.round(ctx.parsed.x / soma * 100) + "%)";
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            beginAtZero: true,
+            ticks: { precision: 0 },
+            title: { display: true, text: "Pontos" },
+            grid: { color: "rgba(55, 54, 51, 0.12)" }
+          },
+          y: { grid: { display: false } }
+        }
+      }
+    };
+
+    const myChart = new Chart(document.getElementById("myChart"), config);
+  }
+
+  carregarDashboard();
+</script>
+</body>
+
+</html>

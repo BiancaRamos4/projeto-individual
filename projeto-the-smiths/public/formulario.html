@@ -46,8 +46,7 @@
     </div>
   </div>
 
-
-    <section class="quiz">
+  <section class="quiz">
         <div class="card-quiz">
             <h2>Qual álbum do The Smiths combina com você?</h2>
             <p id="intro">Responda 8 perguntas sobre o seu gosto musical. No fim, os álbuns aparecem do mais ao menos parecido com você.</p>
@@ -77,8 +76,8 @@
             </div>
         </div>
     </section>
-
-    <div class="footer">
+  <!--footer inicio-->
+  <div class="footer">
     <div class="container">
       <h4>Feito com amor por Bianca Ramos da Silva &hearts; SPTech &copy; 2026/2</h4>
     </div>
@@ -87,6 +86,7 @@
     </div>
   </div>
   <!--footer fim-->
+</body>
 </body>
 
 </html>
@@ -131,7 +131,7 @@
                 { t: "Final de ciclo, uma despedida dramática e elegante", p: [0, 1, 2, 3] }
             ]
         },
-        {   // pergunta usada como desempate (índice 4)
+        {
             texto: "Que tipo de álbum você gostaria de ouvir?",
             opcoes: [
                 { t: "Um álbum de estreia, cru e espontâneo, como o início de uma história", p: [3, 1, 1, 1] },
@@ -169,7 +169,6 @@
         }
     ];
 
-    const INDICE_DESEMPATE = 4;
     let atual = 0;
     const respostas = new Array(perguntas.length).fill(null); // índice da opção escolhida em cada pergunta
 
@@ -233,15 +232,13 @@
         });
 
         const somaGeral = totais.reduce((a, b) => a + b, 0); // sempre 48
-        const desempate = perguntas[INDICE_DESEMPATE].opcoes[respostas[INDICE_DESEMPATE]].p;
 
         // ranking do álbum mais compatível ao menos compatível
         const ranking = albuns.map((nome, k) => ({
             album: nome,
             pontos: totais[k],
-            porcentagem: Math.round(totais[k] / somaGeral * 100),
-            desempate: desempate[k]
-        })).sort((a, b) => b.pontos - a.pontos || b.desempate - a.desempate);
+            porcentagem: Math.round(totais[k] / somaGeral * 100)
+        })).sort((a, b) => b.pontos - a.pontos);
 
         // TEMPORÁRIO: guarda na sessão. Amanhã, troque por um fetch para a API (Web-Data-Viz)
         // enviando o ID_USUARIO e os pontos de cada álbum para a tabela do banco.
@@ -263,6 +260,7 @@
             </div>`).join('');
     }
 </script>
+
 
 
 </body>

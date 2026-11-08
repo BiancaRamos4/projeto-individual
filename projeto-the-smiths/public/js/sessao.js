@@ -34,3 +34,20 @@ function finalizarAguardar(texto) {
     }
 }
 
+// páginas da raiz (formulario.html e dashboard.html): só entra quem está logado
+function exigirLogin() {
+    if (sessionStorage.ID_USUARIO == null) {
+        window.location = "login.html";
+    }
+}
+
+// mostra ou esconde os links da navbar conforme o login
+function ajustarNavbar() {
+    var logado = sessionStorage.ID_USUARIO != null;
+    document.querySelectorAll(".so-logado").forEach(function (el) {
+        el.style.display = logado ? "" : "none";
+    });
+    document.querySelectorAll(".so-deslogado").forEach(function (el) {
+        el.style.display = logado ? "none" : "";
+    });
+}

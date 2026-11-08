@@ -26,24 +26,31 @@
       <div class="identidade">
         <img src="./assets/icon/the_smiths_branco_fino.png" alt="Logo" class="logo">
         <h1 class="titulo">The Smiths Archive</h1>
-      </div>
-      <ul class="navbar">
-        <li class="agora">
-          <a href="#">Home</a>
-        </li>
-        <li>|</li>
+       </div>
+        <ul class="navbar">
         <li>
-          <a href="login.html">Login</a>
+        <a href="index.html">Home</a>
         </li>|
         <li>
-          <a href="cadastro.html">Cadastro</a>
+            <a href="login.html">Login</a>
         </li>|
-          <li>
-          <a href="formulario.html">Formulário</a>
+        <li class="so-deslogado agora">
+            <a href="cadastro.html">Cadastro</a>
         </li>
-      </ul>
+        <li class="so-logado">
+            <a href="formulario.html">Formulário</a>
+        </li>
+        <li class="so-logado">
+            <a href="dashboard.html">Dashboard</a>
+        </li>
+        <li class="so-logado">
+            <a href="#" onclick="limparSessao(); return false;">Sair</a>
+        </li>
+       </ul>
+       <script>ajustarNavbar();</script>
     </div>
-  </div>
+ </div>
+
   <!--header fim-->
 
   <div class="login">
@@ -64,18 +71,23 @@
             <span>Nome:</span>
             <input id="nome_input" type="text" placeholder="Seu nome" />
           </div>
+          <div id="div_nomeInvalido"></div>
           <div class="campo">
             <span>E-mail:</span>
             <input id="email_input" type="text" placeholder="meuemail@provedor.com" />
           </div>
+          <div id="div_emailInvalido"></div>
           <div class="campo">
             <span>Senha:</span>
             <input id="senha_input" type="password" placeholder="******" />
+            <div id="div_fraca"></div> <div id="div_forte"></div>
           </div>
           <div class="campo">
             <span>Confirmação da Senha:</span>
             <input id="confirmacao_senha_input" type="password" placeholder="******" />
           </div>
+          <div id="div_senhaDif"></div>
+          <div id="div_msg"></div>
           <button class="botao" onclick="cadastrar()">Cadastrar</button>
         </div>
         <div id="div_aguardar" class="loading-div">
@@ -97,41 +109,34 @@
     </div>
   </div>
   <!--footer fim-->
-</body>
-
-</html>
 
 <script>
 
-  // Array para armazenar empresas cadastradas para validação de código de ativação 
-  let listaEmpresasCadastradas = [];
+  function cadastrar() {
+    let nome = nome_input.value.trim();
+    let email = email_input.value.trim();
+    let senha = senha_input.value.trim();
+    let confirmarSenha = confirmacao_senha_input.value.trim();
 
- function cadastrar() {
-      let nome = ipt_nome.value.trim();
-      let email = ipt_email.value.trim();
-      let senha = ipt_senha.value.trim();
-      let confirmarSenha = ipt_confirmarSenha.value.trim();
+    let nomeInvalido = true;
+    let emailInvalido = true;
+    let tem1arroba = false;
+    let senhaInvalida = true;
+    let cfmSenhaInvalido = true;
 
-      let nomeInvalido = true;
-      let emailInvalido = true;
-      let tem1arroba = false;
-      let senhaInvalida = true;
-      let cfmSenhaInvalido = true;
-
-      let temMaius = false;
-      let temMinus = false;
-      let temNum = false;
-      let temSimb = false;
-      let numerosPermitidos = "0123456789";
-      let simbolos = "!@#$%&*_-./";
+    let temMaius = false;
+    let temMinus = false;
+    let temNum = false;
+    let temSimb = false;
+    let numerosPermitidos = "0123456789";
+    let simbolos = "!@#$%&*_-./";
 
     // Verificando se há algum campo em branco
     if (
-      nomeVar == "" ||
-      emailVar == "" ||
-      senhaVar == "" ||
-      confirmacaoSenhaVar == "" ||
-      codigoVar == ""
+      nome == "" ||
+      email == "" ||
+      senha == "" ||
+      confirmarSenha == ""
     ) {
       cardErro.style.display = "block";
       mensagem_erro.innerHTML =
@@ -140,71 +145,73 @@
       finalizarAguardar();
       return false;
     } else {
-      setInterval(sumirMensagem, 5000);
+    setTimeout(sumirMensagem, 5000);
+}
+
+    // nome
+    let nomeSoLetras = true;
+    for (let i = 0; i < nome.length; i++) {
+      let c = nome[i];
+      if (c !== " " && c.toLowerCase() === c.toUpperCase()) nomeSoLetras = false;
     }
 
-          // nome
-      let nomeSoLetras = true;
-      for (let i = 0; i < nome.length; i++) {
-        let c = nome[contarNome];
-        if (c !== " " && c.toLowerCase() === c.toUpperCase()) nomeSoLetras = false;
-      }
-
-      if (nome.length >= 3 && nome.length <= 45 && nomeSoLetras) {
-        nomeInvalido = false;
-        div_nomeInvalido.innerHTML = "";
-      } else {
-        div_nomeInvalido.innerHTML = "Digite um nome válido.";
-      }
-
-      // email
-      if (!email.includes(" ") && email.split("@").length == 2 && (
-        email.endsWith("@gmail.com") ||
-        email.endsWith("@hotmail.com") ||
-        email.endsWith("@outlook.com") ||
-        email.endsWith("@sptech.school")
-      )) {
-        emailInvalido = false;
-        div_emailInvalido.innerHTML = "";
-      } else {
-        div_emailInvalido.innerHTML = "Digite um email válido.";
-      }
-
-      for (let i = 0; i < senha.length; i++) {
-        let caractere = senha[contarCaractere];
-        if (caractere >= "A" && caractere <= "Z") temMaius = true;
-        if (caractere >= "a" && caractere <= "z") temMinus = true;
-        if (numerosPermitidos.includes(caractere)) temNum = true;
-        if (simbolos.includes(caractere)) temSimb = true;
-      }
-
-      // senha
-      if (temMaius && temMinus && temNum && temSimb && senha.length >= 8 && senha.length <= 45) {
-        div_forte.innerHTML = "Senha forte";
-        senhaInvalida = false;
-        div_fraca.innerHTML = "";
-      } else {
-        div_fraca.innerHTML = "Senha fraca";
-        senhaInvalida = true;
-        div_forte.innerHTML = "";
-      }
-
-      // confirmar senha
-      if (confirmarSenha === senha && senha !== "") {
-        cfmSenhaInvalido = false;
-        div_senhaDif.innerHTML = ""
-        div_msg.innerHTML = ""
-      } else {
-        div_senhaDif.innerHTML = "As senhas são diferentes.";
-        div_msg.innerHTML = ""
-      }
-
-      if (emailInvalido || senhaInvalida) {
-        div_msg.innerHTML = "Preencha  os dados corretamente."
-      }
+    if (nome.length >= 3 && nome.length <= 45 && nomeSoLetras) {
+      nomeInvalido = false;
+      div_nomeInvalido.innerHTML = "";
+    } else {
+      div_nomeInvalido.innerHTML = "Digite um nome válido.";
     }
 
-   
+    // email
+    if (!email.includes(" ") && email.split("@").length == 2 && (
+      email.endsWith("@gmail.com") ||
+      email.endsWith("@hotmail.com") ||
+      email.endsWith("@outlook.com") ||
+      email.endsWith("@sptech.school") 
+    )) {
+      tem1arroba = true;
+      emailInvalido = false;
+      div_emailInvalido.innerHTML = "";
+    } else {
+      div_emailInvalido.innerHTML = "Digite um email válido.";
+    }
+
+    for (let i = 0; i < senha.length; i++) {
+      let caractere = senha[i];
+      if (caractere >= "A" && caractere <= "Z") temMaius = true;
+      if (caractere >= "a" && caractere <= "z") temMinus = true;
+      if (numerosPermitidos.includes(caractere)) temNum = true;
+      if (simbolos.includes(caractere)) temSimb = true;
+    }
+
+    // senha
+    if (temMaius && temMinus && temNum && temSimb && senha.length >= 8 && senha.length <= 45) {
+      div_forte.innerHTML = "Senha forte";
+      senhaInvalida = false;
+      div_fraca.innerHTML = "";
+    } else {
+      div_fraca.innerHTML = "Senha fraca";
+      senhaInvalida = true;
+      div_forte.innerHTML = "";
+    }
+
+    // confirmar senha
+    if (confirmarSenha === senha && senha !== "") {
+      cfmSenhaInvalido = false;
+      div_senhaDif.innerHTML = ""
+      div_msg.innerHTML = ""
+    } else {
+      div_senhaDif.innerHTML = "As senhas são diferentes.";
+      div_msg.innerHTML = ""
+    }
+
+    // se algum campo estiver inválido, não envia para o servidor
+    if (nomeInvalido || emailInvalido || senhaInvalida || cfmSenhaInvalido) {
+      div_msg.innerHTML = "Preencha  os dados corretamente."
+      return false;
+    }
+
+    aguardar();
 
     // Enviando o valor da nova input
     fetch("/usuarios/cadastrar", {
@@ -215,9 +222,9 @@
       body: JSON.stringify({
         // crie um atributo que recebe o valor recuperado aqui
         // Agora vá para o arquivo routes/usuario.js
-        nomeServer: nomeVar,
-        emailServer: emailVar,
-        senhaServer: senhaVar,
+        nomeServer: nome,
+        emailServer: email,
+        senhaServer: senha,
       }),
     })
       .then(function (resposta) {
@@ -236,7 +243,12 @@
           limparFormulario();
           finalizarAguardar();
         } else {
-          throw "Houve um erro ao tentar realizar o cadastro!";
+          // mostra o motivo devolvido pelo servidor (ex.: e-mail já cadastrado)
+          resposta.text().then(function (texto) {
+            cardErro.style.display = "block";
+            mensagem_erro.innerHTML = texto || "Houve um erro ao tentar realizar o cadastro!";
+            finalizarAguardar();
+          });
         }
       })
       .catch(function (resposta) {
@@ -245,29 +257,19 @@
       });
 
     return false;
-  
+  }
 
-  // Listando empresas cadastradas 
-  function listar() {
-    fetch("/empresas/listar", {
-      method: "GET",
-    })
-      .then(function (resposta) {
-        resposta.json().then((empresas) => {
-          empresas.forEach((empresa) => {
-            listaEmpresasCadastradas.push(empresa);
-
-            console.log("listaEmpresasCadastradas")
-            console.log(listaEmpresasCadastradas[0].codigo_ativacao)
-          });
-        });
-      })
-      .catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-      });
+  function limparFormulario() {
+    nome_input.value = "";
+    email_input.value = "";
+    senha_input.value = "";
+    confirmacao_senha_input.value = "";
   }
 
   function sumirMensagem() {
     cardErro.style.display = "none";
   }
 </script>
+</body>
+
+</html>

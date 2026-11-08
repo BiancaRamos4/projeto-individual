@@ -26,24 +26,31 @@
       <div class="identidade">
         <img src="./assets/icon/the_smiths_branco_fino.png" alt="Logo" class="logo">
         <h1 class="titulo">The Smiths Archive</h1>
-      </div>
-      <ul class="navbar">
-        <li class="agora">
-          <a href="#">Home</a>
-        </li>
-        <li>|</li>
+       </div>
+        <ul class="navbar">
         <li>
-          <a href="login.html">Login</a>
+        <a href="ind">Home</a>
         </li>|
         <li>
-          <a href="cadastro.html">Cadastro</a>
+            <a href="login.html">Login</a>
         </li>|
-          <li>
-          <a href="formulario.html">Formulário</a>
+        <li class="so-deslogado, agora">
+            <a href="cadastro.html">Cadastro</a>
         </li>
-      </ul>
+        <li class="so-logado">
+            <a href="formulario.html">Formulário</a>
+        </li>
+        <li class="so-logado">
+            <a href="dashboard.html">Dashboard</a>
+        </li>
+        <li class="so-logado">
+            <a href="#" onclick="limparSessao(); return false;">Sair</a>
+        </li>
+       </ul>
+       <script>ajustarNavbar();</script>
     </div>
-  </div>
+ </div>
+
 
   <div class="banner">
     <div class="container-texto">
