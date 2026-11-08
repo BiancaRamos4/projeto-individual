@@ -111,7 +111,7 @@ h2 {
 
 .banner {
   background-color: #F2EBDD;
-  padding: 70px 0;
+  padding: 50px 0;
 }
 
 
@@ -396,75 +396,183 @@ input {
   width: 50px;
 }
 
-/* SIMULADOR */
+/* FORMULÁRIO QUIZ */
 
-.simulador {
-  color: white;
+[hidden] {
+  display: none !important;
 }
 
-.simulador .container {
-  flex-direction: column;
-  overflow: scroll;
-  height: var(--tamanho-simulador);
-}
-
-/* ALERTA */
-
-#alerta {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-}
-
-.mensagem-alarme {
-  background-color: white;
-  border-radius: 5px;
-  width: 300px;
-  height: 80px;
-  margin: 10px;
-  padding: 10px 0;
+.quiz {
+  min-height: var(--tamanho-login);
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
+  padding: 30px 20px;
+  box-sizing: border-box;
 }
 
-.mensagem-alarme h3 {
-  font-size: 14px;
+.card-quiz {
+  width: 100%;
+  max-width: 680px;
+  background-color: #D8CBB7;
+  border: solid;
+  border-radius: 10px;
+  color: #373633;
+  padding: 28px;
+  box-sizing: border-box;
+}
+
+.card-quiz h2 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 34px;
+  font-weight: 500;
+  margin: 0 0 10px;
+}
+
+.card-quiz h3 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 28px;
+  font-weight: 500;
+  margin: 0 0 20px;
+}
+
+.card-quiz p {
+  font-family: "Libre Franklin", sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  margin: 0 0 16px;
+}
+
+.card-quiz fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+.card-quiz legend {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 28px;
+  font-weight: 500;
+  padding: 0;
+  margin-bottom: 16px;
+}
+
+/* barra de progresso */
+.card-quiz #progresso {
+  height: 6px;
+  background-color: #F2EBDD;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.card-quiz #barraProgresso {
+  height: 100%;
+  width: 0;
+  background-color: #373633;
+  transition: width 0.3s;
+}
+
+/* alternativas (o radio fica escondido e o label vira o botão) */
+.card-quiz .opcao {
+  position: relative;
+}
+
+.card-quiz .opcao input {
+  position: absolute;
+  opacity: 0;
   margin: 0;
 }
 
-.mensagem-alarme .informacao {
-  width: 66%;
+.card-quiz .opcao label {
+  display: block;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  background-color: #F2EBDD;
+  border: 2px solid #B8B2A8;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: "Libre Franklin", sans-serif;
+  font-size: 15px;
+  transition: background-color 0.2s;
 }
 
-.alarme-sino {
-  width: 48px;
-  height: 48px;
-  animation-name: bell;
-  animation-duration: 4s;
-  background-image: url('https://cdn-icons-png.flaticon.com/512/1157/1157000.png');
-  background-size: cover;
-  animation-iteration-count: infinite;
+.card-quiz .opcao label:hover {
+  background-color: #A49A85;
 }
 
-@keyframes bell {
-  0% {
-    transform: rotate(25deg)
-  }
+.card-quiz .opcao input:checked + label {
+  background-color: #373633;
+  border-color: #373633;
+  color: #f5efe6;
+}
 
-  25% {
-    transform: rotate(-25deg)
-  }
+/* aviso de erro */
+.card-quiz #aviso {
+  min-height: 1.4em;
+  margin: 8px 0 0;
+  font-weight: 600;
+  color: #8a3b2e;
+}
 
-  50% {
-    transform: rotate(25deg)
-  }
+/* botões (reaproveitam o .botao do login) */
+.quiz-botoes {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
 
-  75% {
-    transform: rotate(-25deg)
-  }
+.quiz-botoes .botao,
+.card-quiz > .botao {
+  margin-top: 0;
+}
 
-  100% {
-    transform: rotate(25deg)
+.card-quiz .botao-largo {
+  width: auto;
+  height: auto;
+  padding: 8px 18px;
+}
+
+.card-quiz .botao:hover:not(:disabled) {
+  background-color: #A49A85;
+  color: #373633;
+}
+
+.card-quiz .botao:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.card-quiz .botao:focus-visible,
+.card-quiz .opcao input:focus-visible + label {
+  outline: 3px solid #373633;
+  outline-offset: 2px;
+}
+
+/* resultado em barras */
+.card-quiz .linha {
+  margin-bottom: 14px;
+  font-family: "Libre Franklin", sans-serif;
+  font-size: 15px;
+}
+
+.card-quiz .trilho {
+  height: 14px;
+  background-color: #F2EBDD;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.card-quiz .barra {
+  height: 100%;
+  background-color: #373633;
+  border-radius: 10px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-quiz #barraProgresso {
+    transition: none;
   }
 }
