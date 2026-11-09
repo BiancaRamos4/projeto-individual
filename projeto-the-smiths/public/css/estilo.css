@@ -576,3 +576,137 @@ input {
     transition: none;
   }
 }
+
+/* mensagens de validação do cadastro */
+.msg-erro { color: #8a3b2e; font-size: 13px; font-weight: 600; }
+.msg-ok { color: #34502a; font-size: 13px; font-weight: 600; }
+
+/* ===== DASHBOARD (gráfico de álbuns) ===== */
+/* Cole este bloco no FINAL do seu estilo.css */
+
+.dash-smiths {
+  min-height: var(--tamanho-login);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 30px 20px;
+  box-sizing: border-box;
+}
+
+.dash-container {
+  width: 100%;
+  max-width: 900px;
+  background-color: #D8CBB7;
+  border: solid;
+  border-radius: 10px;
+  color: #373633;
+  padding: 28px;
+  box-sizing: border-box;
+}
+
+.dash-titulo {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 38px;
+  font-weight: 500;
+  margin: 0 0 6px;
+}
+
+.dash-sub {
+  font-family: "Libre Franklin", sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  margin: 0 0 20px;
+}
+
+/* cards "mais compatível" e "menos compatível" */
+.dash-kpis {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.dash-kpi {
+  background-color: #F2EBDD;
+  border: 2px solid #B8B2A8;
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dash-kpi-rotulo {
+  font-family: "Libre Franklin", sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #55524D;
+}
+
+.dash-kpi-valor {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.dash-kpi-detalhe {
+  font-family: "Libre Franklin", sans-serif;
+  font-size: 14px;
+  color: #55524D;
+}
+
+/* card do gráfico */
+.dash-card {
+  background-color: #F2EBDD;
+  border: 2px solid #B8B2A8;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.dash-card h3 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 26px;
+  font-weight: 500;
+  margin: 0 0 12px;
+}
+
+/* o Chart.js precisa de um container com position: relative e altura */
+.dash-grafico {
+  position: relative;
+  height: 340px;
+}
+
+.dash-acoes {
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.dash-acoes .botao {
+  width: auto;
+  height: auto;
+  padding: 8px 18px;
+}
+
+.dash-acoes .botao:hover {
+  background-color: #A49A85;
+  color: #373633;
+}
+
+.dash-acoes .botao:focus-visible {
+  outline: 3px solid #373633;
+  outline-offset: 2px;
+}
+
+@media (max-width: 560px) {
+  .dash-kpis {
+    grid-template-columns: 1fr;
+  }
+
+  .dash-grafico {
+    height: 300px;
+  }
+}

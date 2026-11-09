@@ -2,91 +2,86 @@
 <html lang="pt-br">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>The Smiths Archive | Página Inicial</title>
+    <title>The Smiths Archive | Página Inicial</title>
 
-  <script src="./js/sessao.js"></script>
+    <script src="./js/sessao.js"></script>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;800&family=Cormorant+Garamond:wght@500&family=Libre+Franklin:wght@400;800&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" href="./css/estilo.css">
-  <link rel="icon" href="./assets/icon/icon-the-smiths.ico">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;800&family=Cormorant+Garamond:wght@500&family=Libre+Franklin:wght@400;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./css/estilo.css">
+    <link rel="icon" href="./assets/icon/icon-the-smiths.ico">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
 </head>
 
 <body>
-<body>
-  <div class="header">
-    <div class="container">
-      <div class="identidade">
-        <img src="./assets/icon/the_smiths_branco_fino.png" alt="Logo" class="logo">
-        <h1 class="titulo">The Smiths Archive</h1>
-      </div>
-      <ul class="navbar">
-        <li class="agora">
-          <a href="#">Home</a>
-        </li>
-        <li>|</li>
-        <li>
-          <a href="login.html">Login</a>
-        </li>|
-        <li>
-          <a href="cadastro.html">Cadastro</a>
-        </li>|
-          <li>
-          <a href="formulario.html">Formulário</a>
-        </li>
-      </ul>
-    </div>
-  </div>
 
-  <section class="quiz">
-        <div class="card-quiz">
-            <h2>Qual álbum do The Smiths combina com você?</h2>
-            <p id="intro">Responda 8 perguntas sobre o seu gosto musical. No fim, os álbuns aparecem do mais ao menos parecido com você.</p>
-            <button class="botao" id="btnIniciar" onclick="iniciar()">Começar</button>
-
-            <div id="perguntaBox" hidden>
-                <div id="progresso"><div id="barraProgresso"></div></div>
-                <p id="infoQuestao">Pergunta <span id="numAtual"></span> de <span id="qtd"></span></p>
-                <fieldset>
-                    <legend id="textoPergunta"></legend>
-                    <div id="opcoes"></div>
-                </fieldset>
-                <p id="aviso" role="alert"></p>
-                <div class="quiz-botoes">
-                    <button class="botao" id="btnVoltar" onclick="voltar()">Voltar</button>
-                    <button class="botao botao-largo" id="btnProxima" onclick="proxima()">Próxima</button>
+    <body>
+        <div class="header">
+            <div class="container">
+                <div class="identidade">
+                    <img src="./assets/icon/the_smiths_branco_fino.png" alt="Logo" class="logo">
+                    <h1 class="titulo">The Smiths Archive</h1>
                 </div>
-            </div>
-
-            <div id="resultado" hidden>
-                <h3 id="tituloResultado"></h3>
-                <div id="ranking"></div>
-                <div class="quiz-botoes">
-                    <button class="botao" onclick="window.location.reload()">Refazer</button>
-                    <button class="botao botao-largo" onclick="window.location.href = 'dashboard.html'">Ver minha dashboard</button>
-                </div>
+                <ul class="navbar">
+                    <li class="agora">
+                        <a href="#">Home</a>
+                    </li>
+                    <li>|</li>
+                    <li>
+                        <a href="login.html">Login</a>
+                    </li>|
+                    <li>
+                        <a href="cadastro.html">Cadastro</a>
+                    </li>|
+                    <li>
+                        <a href="formulario.html">Formulário</a>
+                    </li>
+                </ul>
             </div>
         </div>
-    </section>
-  <!--footer inicio-->
-  <div class="footer">
-    <div class="container">
-      <h4>Feito com amor por Bianca Ramos da Silva &hearts; SPTech &copy; 2026/2</h4>
-    </div>
-    <div class="container-texto">
-      <h4>&copy; 2026 The Smiths. All rights reserved.</h4>
-    </div>
-  </div>
-  <!--footer fim-->
-</body>
+
+        <section class="quiz">
+            <div class="card-quiz">
+                <h2>Qual álbum do The Smiths combina com você?</h2>
+                <p id="intro">Responda 8 perguntas sobre o seu gosto musical. No fim, os álbuns aparecem do mais ao
+                    menos parecido com você.</p>
+                <button class="botao" id="btnIniciar" onclick="iniciar()">Começar</button>
+
+                <div id="perguntaBox" hidden>
+                    <div id="progresso">
+                        <div id="barraProgresso"></div>
+                    </div>
+                    <p id="infoQuestao">Pergunta <span id="numAtual"></span> de <span id="qtd"></span></p>
+                    <fieldset>
+                        <legend id="textoPergunta"></legend>
+                        <div id="opcoes"></div>
+                    </fieldset>
+                    <p id="aviso" role="alert"></p>
+                    <div class="quiz-botoes">
+                        <button class="botao" id="btnVoltar" onclick="voltar()">Voltar</button>
+                        <button class="botao botao-largo" id="btnProxima" onclick="proxima()">Próxima</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--footer inicio-->
+        <div class="footer">
+            <div class="container">
+                <h4>Feito com amor por Bianca Ramos da Silva &hearts; SPTech &copy; 2026/2</h4>
+            </div>
+            <div class="container-texto">
+                <h4>&copy; 2026 The Smiths. All rights reserved.</h4>
+            </div>
+        </div>
+        <!--footer fim-->
+    </body>
 </body>
 
 </html>
@@ -235,34 +230,42 @@
 
         // ranking do álbum mais compatível ao menos compatível
         const ranking = albuns.map((nome, k) => ({
+            idAlbum: k + 1, // mesma ordem do INSERT na tabela album
             album: nome,
             pontos: totais[k],
             porcentagem: Math.round(totais[k] / somaGeral * 100)
         })).sort((a, b) => b.pontos - a.pontos);
 
-        // TEMPORÁRIO: guarda na sessão. Amanhã, troque por um fetch para a API (Web-Data-Viz)
-        // enviando o ID_USUARIO e os pontos de cada álbum para a tabela do banco.
-        sessionStorage.setItem('PONTUACOES', JSON.stringify(ranking));
+        // evita clique duplo enquanto salva
+        document.getElementById("btnProxima").disabled = true;
+        document.getElementById("btnProxima").textContent = "Salvando...";
 
-        mostrarResultado(ranking);
+        // envia os pontos para a API, que grava na tabela pontuacao
+        fetch("/pontuacoes/salvar", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                idUsuarioServer: sessionStorage.ID_USUARIO,
+                pontuacoesServer: ranking.map(r => ({ idAlbum: r.idAlbum, pontos: r.pontos }))
+            })
+        }).then(function (resposta) {
+            if (resposta.ok) {
+                // salvou: vai direto para a dashboard
+                window.location.href = "dashboard.html";
+            } else {
+                alert("Não foi possível salvar suas respostas. Tente novamente.");
+                document.getElementById("btnProxima").disabled = false;
+                document.getElementById("btnProxima").textContent = "Ver resultado";
+            }
+        }).catch(function (erro) {
+            console.log("#ERRO: ", erro);
+            alert("Erro de conexão com o servidor.");
+            document.getElementById("btnProxima").disabled = false;
+            document.getElementById("btnProxima").textContent = "Ver resultado";
+        });
     }
 
-    function mostrarResultado(ranking) {
-        document.getElementById('perguntaBox').hidden = true;
-        document.getElementById('resultado').hidden = false;
-        document.getElementById('tituloResultado').textContent = 'Seu álbum mais compatível: ' + ranking[0].album;
-
-        const maior = ranking[0].pontos;
-        document.getElementById('ranking').innerHTML = ranking.map(r => `
-            <div class="linha">
-                <span>${r.album}: ${r.pontos} pontos (${r.porcentagem}%)</span>
-                <div class="trilho"><div class="barra" style="width:${r.pontos / maior * 100}%"></div></div>
-            </div>`).join('');
-    }
 </script>
-
-
-
 </body>
 
 </html>
