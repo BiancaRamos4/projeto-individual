@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>The Smiths Archive | Página Inicial</title>
+
+    <script src="./js/sessao.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;800&family=Cormorant+Garamond:wght@500&family=Libre+Franklin:wght@400;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./css/estilo.css">
+    <link rel="icon" href="./assets/icon/icon-the-smiths.ico">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+</head>
+
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="identidade">
+                <img src="./assets/icon/the_smiths_branco_fino.png" alt="Logo" class="logo">
+                <h1 class="titulo">The Smiths Archive</h1>
+            </div>
+            <ul class="navbar">
+                <li><a href="index.html">Home</a></li>
+                <li class="agora"><a href="musicas.html">Músicas</a></li>
+                <li class="so-deslogado"><a href="login.html">Login</a></li>
+                <li class="so-deslogado"><a href="cadastro.html">Cadastro</a></li>
+                <li class="so-logado"><a href="formulario.html">Formulário</a></li>
+                <li class="so-logado"><a href="dashboard.html">Dashboard</a></li>
+                <li class="so-logado"><a href="#" onclick="limparSessao(); return false;">Sair</a></li>
+            </ul>
+            <script>ajustarNavbar();</script>
+        </div>
+    </div>
+
+
+    <div class="banner">
+        <div class="container-texto">
+
+            <!-- Título da seção de álbuns (sozinho, sem imagem) -->
+            <h1 class="titulo-secao">꧁A Trilha Sonora da Melancolia꧂</h1>
+
+            <!-- Álbum 1 -->
+            <div class="conteudo-historia">
+                <div class="texto-lateral">
+                    <h2>1. The Smiths (1984)</h2>
+                    <iframe data-testid="embed-iframe" style="border-radius:12px"
+                        src="https://open.spotify.com/embed/album/6cI1XoZsOhkyrCwtuI70CN?utm_source=generator&si=22ca1df140bb4a68"
+                        width="100%" height="352" frameBorder="0" allowfullscreen=""
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                        loading="lazy"></iframe>
+                </div>
+                <div class="imagem-musica">
+                    <img src="./assets/imgs/the-smiths.png" alt="Capa do álbum The Smiths">
+                </div>
+            </div>
+
+            <!-- Álbum 2 -->
+            <div class="conteudo-historia">
+                <div class="texto-lateral">
+                    <h2>2. Meat Is Murder</h2>
+                    <iframe data-testid="embed-iframe" style="border-radius:12px"
+                        src="https://open.spotify.com/embed/album/5DM1qCdgGt2zbknnsVn1Ca?utm_source=generator&si=8d020fd71da84dc5"
+                        width="100%" height="352" frameBorder="0" allowfullscreen=""
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                        loading="lazy"></iframe>
+                </div>
+                <div class="imagem-historia">
+                    <img src="./assets/imgs/meat-is-murder1.png" alt="Capa do álbum Meat Is Murder">
+                </div>
+            </div>
+
+            <!-- Álbum 3 -->
+            <div class="conteudo-historia">
+                <div class="texto-lateral">
+                    <h2>3. The Queen Is Dead</h2>
+                    <iframe data-testid="embed-iframe" style="border-radius:12px"
+                        src="https://open.spotify.com/embed/album/5Y0p2XCgRRIjna91aQE8q7?utm_source=generator&si=4d6c0d78dd154db4"
+                        width="100%" height="352" frameBorder="0" allowfullscreen=""
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                        loading="lazy"></iframe>
+                </div>
+                <div class="imagem-musica">
+                    <img src="assets/imgs/the-queen-is-dead.png" alt="Capa do álbum The Queen Is Dead">
+                </div>
+            </div>
+
+            <!-- Álbum 4 -->
+            <div class="conteudo-historia">
+                <div class="texto-lateral">
+                    <h2>4. Strangeways, Here We Come</h2>
+                    <iframe data-testid="embed-iframe" style="border-radius:12px"
+                        src="https://open.spotify.com/embed/album/7jfexk2w5aDI25njkN0UGg?utm_source=generator&si=8e1970fc977e48b3"
+                        width="100%" height="352" frameBorder="0" allowfullscreen=""
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                        loading="lazy"></iframe>
+                </div>
+                <div class="imagem-musica">
+                    <img src="./assets/imgs/strangeways-here-we-come.png" alt="Capa do álbum Strangeways, Here We Come">
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="footer">
+        <div class="container-texto">
+            <h4>Feito por Bianca Ramos da Silva &hearts; SPTech &copy; 2026/2</h4>
+        </div>
+        <div class="container-texto">
+            <h4>&copy; 2026 The Smiths. All rights reserved.</h4>
+        </div>
+    </div>
+</body>
+
+</html>

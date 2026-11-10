@@ -1,9 +1,11 @@
 body {
-  height: 100%;
+  min-height: 100vh;
   margin: 0;
   padding: 0;
   font-family: "Libre Franklin", sans-serif;
-  background-image: url(..//assets/fundo-login-e-cadastro.jpg); 
+  background-image: url(../assets/fundo-login-e-cadastro.jpg);
+  display: flex;
+  flex-direction: column;
 }
 
 body .pagina-home {
@@ -112,6 +114,7 @@ h2 {
 .banner {
   background-color: #F2EBDD;
   padding: 50px 0;
+  flex: 1;
 }
 
 
@@ -158,7 +161,7 @@ h2 {
 /* título "Os 4 álbuns" */
 .titulo-secao {
   font-family: "Cormorant Garamond", serif;
-  font-size: 40px;
+  font-size: 50px;
   font-weight: 500;
   color: #373633;
   margin: 0 0 40px;
@@ -175,6 +178,17 @@ h2 {
   object-fit: cover;
 }
 
+.imagem-musica {
+  flex: 1;
+}
+
+.imagem-musica img {  
+  padding: 2%;
+  width: 90%;
+  display: block;
+  object-fit: cover;
+}
+
 
 .banner .container span {
   font-weight: 800;
@@ -185,15 +199,13 @@ h2 {
 .footer {
   margin-top: auto;
   background-color: #373633;
-  height: 100px;    
+  height: 100px;
+  flex-shrink: 0;
   color: #D8CBB7;
   display: flex;
   flex-direction: column;
-  /* um embaixo do outro */
   justify-content: center;
-  /* centraliza na vertical */
   align-items: center;
-  /* centraliza na horizontal */
   font-size: 15px;
   border-top: solid #B8B2A8;
 }
@@ -213,6 +225,7 @@ h2 {
   height: var(--tamanho-login);
   background-size: cover;
   flex: 1;
+  padding: 40px 0;
 }
 
 .login .container-login {
@@ -321,7 +334,7 @@ h2 {
   color: #373633;
   flex-direction: column;
   height: fit-content;
-  padding: 20px 0;
+  padding: 30px 0;
 }
 
 .login .container-cadastro {
@@ -581,8 +594,7 @@ input {
 .msg-erro { color: #8a3b2e; font-size: 13px; font-weight: 600; }
 .msg-ok { color: #34502a; font-size: 13px; font-weight: 600; }
 
-/* ===== DASHBOARD (gráfico de álbuns) ===== */
-/* Cole este bloco no FINAL do seu estilo.css */
+/*DASHBOARD*/
 
 .dash-smiths {
   min-height: var(--tamanho-login);
