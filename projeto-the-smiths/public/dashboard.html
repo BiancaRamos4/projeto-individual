@@ -40,10 +40,10 @@
     </div>
   </div>
 
-  <section class="dash-smiths">
+   <section class="dash-smiths">
     <div class="dash-container">
       <h2 class="dash-titulo">Olá, <span id="nomeUsuario"></span>!</h2>
-      <p class="dash-sub" id="dashSub">Veja como os álbuns do The Smiths combinam com o seu gosto musical.</p>
+      <p class="dash-sub" id="dashSub">Descubra aqui por qual álbum começar a sua melancolia melódica.</p>
 
       <div class="dash-kpis">
         <div class="dash-kpi">
@@ -81,99 +81,84 @@
   </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1"></script>
 <script>
-  nomeUsuario.textContent = sessionStorage.NOME_USUARIO;
+    // escreve o nome da pessoa (guardado no login)
+    nomeUsuario.innerHTML = sessionStorage.NOME_USUARIO;
 
-  function carregarDashboard() {
-    fetch("/pontuacoes/listar/" + sessionStorage.ID_USUARIO)
-      .then(function (resposta) {
-        if (resposta.status === 204) {
-          // ainda não respondeu o formulário
-          window.location.href = "formulario.html";
-          return null;
+    // pede ao servidor os pontos desta pessoa (mesmo jeito do login)
+    // o servidor devolve a lista ordenada do álbum mais compatível ao menos compatível
+    fetch("/pontuacoes/listar/" + sessionStorage.ID_USUARIO).then(function (resposta) {
+        resposta.json().then(function (dados) {
+            montarDashboard(dados);
+        });
+    });
+
+    // dados é uma lista assim: [ { album: "The Smiths", pontos: 15 }, etc]
+    function montarDashboard(dados) {
+
+        // soma de todos os pontos (sempre da 48, 6*8, pq cada alternativa distribui 6 pontos
+        // entre os 4 álbuns e são 8 perguntas)
+        let soma = 0;
+        for (let i = 0; i < dados.length; i++) {
+            soma = soma + dados[i].pontos;
         }
-        if (!resposta.ok) {
-          throw new Error("Erro ao buscar os dados: " + resposta.status);
+
+        // 2) kpi: o primeiro da lista é o mais compatível e o ultimo é o menos compatível
+        let mais = dados[0];
+        let menos = dados[dados.length - 1];
+
+        // porcentagem = pontos / total * 100 (Math.round arredonda para um número inteiro)
+        let maisPorcentagem = Math.round(mais.pontos / soma * 100);
+        let menosPorcentagem = Math.round(menos.pontos / soma * 100);
+
+        kpiMais.innerHTML = mais.album;
+        kpiMaisPct.innerHTML = mais.pontos + " pontos (" + maisPorcentagem + "%)";
+        kpiMenos.innerHTML = menos.album;
+        kpiMenosPct.innerHTML = menos.pontos + " pontos (" + menosPorcentagem + "%)";
+
+        // listas pro grafico: nome com porcentagem e pontos de cada album
+        // duas listas separadas: os nomes das barras e os valores
+        let nomes = [];
+        let valores = [];
+        for (let i = 0; i < dados.length; i++) {
+            let porcentagem = Math.round(dados[i].pontos / soma * 100);
+            nomes.push(dados[i].album + " (" + porcentagem + "%)");
+            valores.push(dados[i].pontos);
         }
-        return resposta.json();
-      })
-      .then(function (dados) {
-        if (dados) {
-          preencherCards(dados);
-          plotarGrafico(dados);
-        }
-      })
-      .catch(function (erro) {
-        console.log("#ERRO: " + erro);
-        dashSub.textContent = "Não foi possível carregar os seus dados.";
-      });
-  }
 
-  // dados chegam ordenados do maior para o menor: [{ album, pontos }, ...]
-  function preencherCards(dados) {
-    const soma = dados.reduce((total, d) => total + d.pontos, 0);
-    const mais = dados[0];
-    const menos = dados[dados.length - 1];
+        // mesma cor e fonte do resto
+        Chart.defaults.color = "#373633";
+        Chart.defaults.font.family = '"Libre Franklin", sans-serif';
 
-    kpiMais.textContent = mais.album;
-    kpiMaisPct.textContent = mais.pontos + " pontos (" + Math.round(mais.pontos / soma * 100) + "%)";
-    kpiMenos.textContent = menos.album;
-    kpiMenosPct.textContent = menos.pontos + " pontos (" + Math.round(menos.pontos / soma * 100) + "%)";
-  }
+        // cores pra cada barrinha
+        let cores = ["#373633", "#55524D", "#7D7566", "#A49A85"];
 
-  function plotarGrafico(dados) {
-    const soma = dados.reduce((total, d) => total + d.pontos, 0);
+        let data = {
+            labels: nomes,
+            datasets: [{
+                label: "Pontos",
+                backgroundColor: cores,
+                data: valores,
+                borderRadius: 6
+            }]
+        };
 
-    Chart.defaults.color = "#373633";
-    Chart.defaults.font.family = '"Libre Franklin", sans-serif';
-
-    const labels = dados.map(d => d.album);
-
-    // do mais escuro (mais compatível) ao mais claro (menos compatível)
-    const cores = ["#373633", "#55524D", "#7D7566", "#A49A85"];
-
-    const data = {
-      labels: labels,
-      datasets: [{
-        label: "Pontos",
-        backgroundColor: cores,
-        borderColor: cores,
-        data: dados.map(d => d.pontos),
-        borderRadius: 6,
-      }]
-    };
-
-    const config = {
-      type: "bar",
-      data: data,
-      options: {
-        indexAxis: "y",
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false },
-          tooltip: {
-            callbacks: {
-              label: function (ctx) {
-                return ctx.parsed.x + " pontos (" + Math.round(ctx.parsed.x / soma * 100) + "%)";
-              }
+        let config = {
+            type: "bar",
+            data: data,
+            options: {
+                indexAxis: "y",              // horizontal
+                maintainAspectRatio: false,  // grafico ocupa a altura da caixa toda
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    x: { beginAtZero: true }
+                }
             }
-          }
-        },
-        scales: {
-          x: {
-            beginAtZero: true,
-            ticks: { precision: 0 },
-            title: { display: true, text: "Pontos" },
-            grid: { color: "rgba(55, 54, 51, 0.12)" }
-          },
-          y: { grid: { display: false } }
-        }
-      }
-    };
+        };
 
-    const myChart = new Chart(document.getElementById("myChart"), config);
-  }
-
-  carregarDashboard();
+        let myChart = new Chart(document.getElementById("myChart"), config);
+    }
 </script>
 </body>
 

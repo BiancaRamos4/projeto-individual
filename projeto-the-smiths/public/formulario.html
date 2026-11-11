@@ -41,224 +41,250 @@
     </div>
   </div>
 
-        <section class="quiz">
-            <div class="card-quiz">
-                <h2>Qual álbum do The Smiths combina com você?</h2>
-                <p id="intro">Responda 8 perguntas sobre o seu gosto musical. No fim, os álbuns aparecem do mais ao
-                    menos parecido com você.</p>
-                <button class="botao" id="btnIniciar" onclick="iniciar()">Começar</button>
+ <section class="quiz">
+    <div class="card-quiz">
+      <h2>Qual álbum do The Smiths combina com você?</h2>
+      <p id="intro">Responda 8 perguntas sobre o seu gosto musical. No fim, os álbuns aparecem do mais ao menos parecido com você.</p>
+      <button class="botao" id="btnIniciar" onclick="iniciar()">Começar</button>
 
-                <div id="perguntaBox" hidden>
-                    <div id="progresso">
-                        <div id="barraProgresso"></div>
-                    </div>
-                    <p id="infoQuestao">Pergunta <span id="numAtual"></span> de <span id="qtd"></span></p>
-                    <fieldset>
-                        <legend id="textoPergunta"></legend>
-                        <div id="opcoes"></div>
-                    </fieldset>
-                    <p id="aviso" role="alert"></p>
-                    <div class="quiz-botoes">
-                        <button class="botao" id="btnVoltar" onclick="voltar()">Voltar</button>
-                        <button class="botao botao-largo" id="btnProxima" onclick="proxima()">Próxima</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!--footer inicio-->
-        <div class="footer">
-            <div class="container">
-                <h4>Feito com amor por Bianca Ramos da Silva &hearts; SPTech &copy; 2026/2</h4>
-            </div>
-            <div class="container-texto">
-                <h4>&copy; 2026 The Smiths. All rights reserved.</h4>
-            </div>
+      <div id="perguntaBox" style="display: none;">
+        <div id="progresso"><div id="barraProgresso"></div></div>
+        <p id="infoQuestao">Pergunta <span id="numAtual"></span> de <span id="qtd"></span></p>
+
+        <fieldset>
+          <legend id="textoPergunta"></legend>
+
+          <div class="opcao">
+            <input type="radio" name="resposta" id="op0">
+            <label for="op0" id="texto0"></label>
+          </div>
+
+          <div class="opcao">
+            <input type="radio" name="resposta" id="op1">
+            <label for="op1" id="texto1"></label>
+          </div>
+
+          <div class="opcao">
+            <input type="radio" name="resposta" id="op2">
+            <label for="op2" id="texto2"></label>
+          </div>
+
+          <div class="opcao">
+            <input type="radio" name="resposta" id="op3">
+            <label for="op3" id="texto3"></label>
+          </div>
+        </fieldset>
+
+        <div class="quiz-botoes">
+          <button class="botao" id="btnVoltar" onclick="voltar()">Voltar</button>
+          <button class="botao botao-largo" id="btnProxima" onclick="proxima()">Próxima</button>
         </div>
-        <!--footer fim-->
-    </body>
-</body>
+      </div>
+    </div>
+  </section>
 
-</html>
+  <div class="footer">
+    <div class="container">
+      <h4>Feito com amor por Bianca Ramos da Silva &hearts; SPTech &copy; 2026/2</h4>
+    </div>
+    <div class="container-texto">
+      <h4>&copy; 2026 The Smiths. All rights reserved.</h4>
+    </div>
+  </div>
 <script>
-    const albuns = ["The Smiths", "Meat Is Murder", "The Queen Is Dead", "Strangeways, Here We Come"];
 
-    // t = texto da opção | p = pontos [The Smiths, Meat Is Murder, The Queen Is Dead, Strangeways]
-    const perguntas = [
-        {
-            texto: "Que clima musical você mais procura?",
-            opcoes: [
-                { t: "Romântico, sonhador, de paixão e saudade", p: [3, 0, 2, 1] },
-                { t: "Alegre e animado, para cantar junto", p: [2, 2, 1, 1] },
-                { t: "Melancólico, para sentir tudo e chorar", p: [0, 1, 3, 2] },
-                { t: "Revoltado, intenso e provocador", p: [1, 3, 0, 2] }
-            ]
-        },
-        {
-            texto: "O que mais te chama atenção no som?",
-            opcoes: [
-                { t: "Guitarra brilhante e dedilhada", p: [3, 0, 2, 1] },
-                { t: "Baixo marcante e ritmo de rock, com groove", p: [1, 3, 1, 1] },
-                { t: "Piano, arranjos e produção mais polida", p: [0, 1, 2, 3] },
-                { t: "Clima atmosférico e canções lentas", p: [2, 2, 1, 1] }
-            ]
-        },
-        {
-            texto: "Que tipo de letra você prefere?",
-            opcoes: [
-                { t: "Poéticas e literárias, sobre amor e solidão", p: [2, 1, 2, 1] },
-                { t: "Críticas sociais e questões éticas", p: [0, 3, 1, 2] },
-                { t: "Humor ácido, ironia e sarcasmo", p: [1, 1, 2, 2] },
-                { t: "Histórias da juventude e do dia a dia (escola, ruas, primeiros amores)", p: [3, 1, 1, 1] }
-            ]
-        },
-        {
-            texto: "Qual cena combina mais com a sua trilha sonora ideal?",
-            opcoes: [
-                { t: "Cidade pequena, tarde de sol, juventude e primeiros amores", p: [3, 1, 1, 1] },
-                { t: "Noite longa, olhando pela janela e pensando em quem se perdeu", p: [2, 1, 2, 1] },
-                { t: "Cenário cinza e crítico, de escola, fábrica ou protesto", p: [1, 3, 1, 1] },
-                { t: "Final de ciclo, uma despedida dramática e elegante", p: [0, 1, 2, 3] }
-            ]
-        },
-        {
-            texto: "Que tipo de álbum você gostaria de ouvir?",
-            opcoes: [
-                { t: "Um álbum de estreia, cru e espontâneo, como o início de uma história", p: [3, 1, 1, 1] },
-                { t: "Um álbum com posicionamento forte e mensagem", p: [1, 3, 1, 1] },
-                { t: "Um álbum equilibrado e completo, tipo obra-prima", p: [1, 1, 3, 1] },
-                { t: "Um álbum maduro, sofisticado e variado, com cara de despedida", p: [1, 1, 1, 3] }
-            ]
-        },
-        {
-            texto: "Mesmo falando de coisas tristes, como você prefere que a música soe?",
-            opcoes: [
-                { t: "Delicada e charmosa, quase um segredo", p: [3, 1, 1, 1] },
-                { t: "Divertida e debochada, rindo da própria tragédia", p: [2, 1, 1, 2] },
-                { t: "Forte e confrontadora", p: [1, 3, 1, 1] },
-                { t: "Profunda e devastadora", p: [0, 1, 3, 2] }
-            ]
-        },
-        {
-            texto: "Qual estilo se parece mais com o que você costuma ouvir?",
-            opcoes: [
-                { t: "Pop/rock alternativo dos anos 80", p: [3, 1, 1, 1] },
-                { t: "Rock direto, com punk, funk ou rockabilly", p: [1, 3, 1, 1] },
-                { t: "Pop melódico e romântico", p: [2, 1, 2, 1] },
-                { t: "Rock teatral e dramático (glam, art rock)", p: [0, 1, 2, 3] }
-            ]
-        },
-        {
-            texto: "Qual frase combina mais com você?",
-            opcoes: [
-                { t: "“Quero me sentir compreendido(a) por uma música”", p: [1, 1, 3, 1] },
-                { t: "“Gosto de músicas com atitude e opinião forte”", p: [1, 3, 1, 1] },
-                { t: "“Gosto de músicas que me fazem sorrir mesmo falando de coisas tristes”", p: [1, 1, 1, 3] },
-                { t: "“Gosto de músicas com um charme meio antigo, que grudam na cabeça”", p: [3, 1, 1, 1] }
-            ]
-        }
+    // posição 0 = The Smiths, 1 = Meat Is Murder, 2 = The Queen Is Dead, 3 = Strangeways, Here We Come
+ 
+    let perguntas = [
+        "Que clima musical você mais procura?",
+        "O que mais te chama atenção no som?",
+        "Que tipo de letra você prefere?",
+        "Qual cena combina mais com a sua trilha sonora ideal?",
+        "Que tipo de álbum você gostaria de ouvir?",
+        "Mesmo falando de coisas tristes, como você prefere que a música soe?",
+        "Qual estilo se parece mais com o que você costuma ouvir?",
+        "Qual frase combina mais com você?"
     ];
 
-    let atual = 0;
-    const respostas = new Array(perguntas.length).fill(null); // índice da opção escolhida em cada pergunta
+    // Texto das 4 alternativas de cada pergunta
+   
+    let alternativas = [
+        [   // pergunta 1
+            "Romântico, sonhador, de paixão e saudade",
+            "Alegre e animado, para cantar junto",
+            "Melancólico, para sentir tudo e chorar",
+            "Revoltado, intenso e provocador"
+        ],
+        [   // pergunta 2
+            "Guitarra brilhante e dedilhada",
+            "Baixo marcante e ritmo de rock, com groove",
+            "Piano, arranjos e produção mais polida",
+            "Clima atmosférico e canções lentas"
+        ],
+        [   // pergunta 3
+            "Poéticas e literárias, sobre amor e solidão",
+            "Críticas sociais e questões éticas",
+            "Humor ácido, ironia e sarcasmo",
+            "Histórias da juventude e do dia a dia (escola, ruas, primeiros amores)"
+        ],
+        [   // pergunta 4
+            "Cidade pequena, tarde de sol, juventude e primeiros amores",
+            "Noite longa, olhando pela janela e pensando em quem se perdeu",
+            "Cenário cinza e crítico, de escola, fábrica ou protesto",
+            "Final de ciclo, uma despedida dramática e elegante"
+        ],
+        [   // pergunta 5
+            "Um álbum de estreia, cru e espontâneo, como o início de uma história",
+            "Um álbum com posicionamento forte e mensagem",
+            "Um álbum equilibrado e completo, tipo obra-prima",
+            "Um álbum maduro, sofisticado e letiado, com cara de despedida"
+        ],
+        [   // pergunta 6
+            "Delicada e charmosa, quase um segredo",
+            "Divertida e debochada, rindo da própria tragédia",
+            "Forte e confrontadora",
+            "Profunda e devastadora"
+        ],
+        [   // pergunta 7
+            "Pop/rock alternativo dos anos 80",
+            "Rock direto, com punk, funk ou rockabilly",
+            "Pop melódico e romântico",
+            "Rock teatral e dramático (glam, art rock)"
+        ],
+        [   // pergunta 8
+            "“Quero me sentir compreendido(a) por uma música”",
+            "“Gosto de músicas com atitude e opinião forte”",
+            "“Gosto de músicas que me fazem sorrir mesmo falando de coisas tristes”",
+            "“Gosto de músicas com um charme meio antigo, que grudam na cabeça”"
+        ]
+    ];
+
+    // Pontos que cada alternativa da para cada album
+    // pontos[pergunta][alternativa][album]
+    let pontos = [
+        [ [3, 0, 2, 1], [2, 2, 1, 1], [0, 1, 3, 2], [1, 3, 0, 2] ],   // perg 1
+        [ [3, 0, 2, 1], [1, 3, 1, 1], [0, 1, 2, 3], [2, 2, 1, 1] ],   // perg 2
+        [ [2, 1, 2, 1], [0, 3, 1, 2], [1, 1, 2, 2], [3, 1, 1, 1] ],   // perg 3
+        [ [3, 1, 1, 1], [2, 1, 2, 1], [1, 3, 1, 1], [0, 1, 2, 3] ],   // perg 4
+        [ [3, 1, 1, 1], [1, 3, 1, 1], [1, 1, 3, 1], [1, 1, 1, 3] ],   // perg 5
+        [ [3, 1, 1, 1], [2, 1, 1, 2], [1, 3, 1, 1], [0, 1, 3, 2] ],   // perg 6
+        [ [3, 1, 1, 1], [1, 3, 1, 1], [2, 1, 2, 1], [0, 1, 2, 3] ],   // perg 7
+        [ [1, 1, 3, 1], [1, 3, 1, 1], [1, 1, 1, 3], [3, 1, 1, 1] ]   // perg 8
+    ];
+
+
+    let atual = 0;   // número da perg que está na tela (0 = primeira pergunta)
+
+    // alternativa escolhida em cada pergunta.-1 = "ainda n respondeu"
+    let respostas = [-1, -1, -1, -1, -1, -1, -1, -1];
 
     function iniciar() {
-        document.getElementById('btnIniciar').hidden = true;
-        document.getElementById('intro').hidden = true;
-        document.getElementById('perguntaBox').hidden = false;
-        document.getElementById('qtd').textContent = perguntas.length;
+        btnIniciar.style.display = "none";
+        intro.style.display = "none";
+        perguntaBox.style.display = "block";
+        qtd.innerHTML = perguntas.length;
         mostrarPergunta();
     }
 
+    // coloca na tela a pergunta atual
     function mostrarPergunta() {
-        const q = perguntas[atual];
-        document.getElementById('numAtual').textContent = atual + 1;
-        document.getElementById('textoPergunta').textContent = q.texto;
-        document.getElementById('barraProgresso').style.width = ((atual + 1) / perguntas.length * 100) + '%';
-        document.getElementById('aviso').textContent = '';
+        numAtual.innerHTML = atual + 1;   // indice 0, mas o usuario está vendo 1
+        textoPergunta.innerHTML = perguntas[atual];
 
-        const lista = document.getElementById('opcoes');
-        lista.innerHTML = '';
-        q.opcoes.forEach((op, i) => {
-            const div = document.createElement('div');
-            div.className = 'opcao';
-            div.innerHTML = `<input type="radio" name="resposta" id="op${i}" value="${i}" ${respostas[atual] === i ? 'checked' : ''}>
-                             <label for="op${i}">${op.t}</label>`;
-            lista.appendChild(div);
-        });
+        // barra de progresso: pergunta 1 de 8 = 12,5%; pergunta 8 de 8 = 100%
+        barraProgresso.style.width = ((atual + 1) / perguntas.length * 100) + "%";
 
-        document.getElementById('btnVoltar').disabled = atual === 0;
-        document.getElementById('btnProxima').textContent = atual === perguntas.length - 1 ? 'Ver resultado' : 'Próxima';
+        // 4 alternativas
+        for (let i = 0; i < 4; i++) {
+            // texto + i forma os ids texto0, texto1, texto2 e texto3
+            document.getElementById("texto" + i).innerHTML = alternativas[atual][i];
+
+            // se a pessoa já respondeu a pergunta, deixa a escolha dela marcada
+            if (respostas[atual] == i) {
+                document.getElementById("op" + i).checked = true;
+            } else {
+                document.getElementById("op" + i).checked = false;
+            }
+        }
+
+        // na primeira pergunta o botão de voltar fica desligado
+        if (atual == 0) {
+            btnVoltar.disabled = true;
+        } else {
+            btnVoltar.disabled = false;
+        }
+
+        // na ultima pergunta o botão muda de texto
+        if (atual == perguntas.length - 1) {
+            btnProxima.innerHTML = "Ver resultado";
+        } else {
+            btnProxima.innerHTML = "Próxima";
+        }
     }
 
     function proxima() {
-        const marcada = document.querySelector('input[name="resposta"]:checked');
-        if (!marcada) {
-            document.getElementById('aviso').textContent = 'Escolha uma opção para continuar.';
-            return;
+        // descobre qual alternativa o usuario marcou
+        let escolhida = -1;
+        for (let i = 0; i < 4; i++) {
+            if (document.getElementById("op" + i).checked) {
+                escolhida = i;
+            }
         }
-        respostas[atual] = Number(marcada.value);
 
-        if (atual < perguntas.length - 1) {
-            atual++;
-            mostrarPergunta();
+        if (escolhida == -1) {
+            alert("Escolha uma opção para continuar!");
         } else {
-            finalizar();
+            respostas[atual] = escolhida;   // guarda a escolha da pergunta
+
+            if (atual < perguntas.length - 1) {
+                atual++;                  
+                mostrarPergunta();
+            } else {
+                finalizar();                
+            }
         }
     }
 
     function voltar() {
         if (atual > 0) {
-            atual--;
+            atual--;                     
             mostrarPergunta();
         }
     }
 
+    // soma os pontos e envia pro servidor e vai para a dashboard
     function finalizar() {
-        // soma os pontos de cada álbum com base nas respostas
-        const totais = [0, 0, 0, 0];
-        respostas.forEach((r, i) => {
-            perguntas[i].opcoes[r].p.forEach((pts, k) => totais[k] += pts);
-        });
+        let totais = [0, 0, 0, 0];   // pontos acumulados de cada album
 
-        const somaGeral = totais.reduce((a, b) => a + b, 0); // sempre 48
+        for (let i = 0; i < respostas.length; i++) {
+            let escolhida = respostas[i];   // alternativa que a pessoa marcou na pergunta
 
-        // ranking do álbum mais compatível ao menos compatível
-        const ranking = albuns.map((nome, k) => ({
-            idAlbum: k + 1, // mesma ordem do INSERT na tabela album
-            album: nome,
-            pontos: totais[k],
-            porcentagem: Math.round(totais[k] / somaGeral * 100)
-        })).sort((a, b) => b.pontos - a.pontos);
+            // soma os pontos dessa alternativa em cada um dos 4 álbuns
+            for (let a = 0; a < 4; a++) {
+                totais[a] = totais[a] + pontos[i][escolhida][a];
+            }
+        }
 
-        // evita clique duplo enquanto salva
-        document.getElementById("btnProxima").disabled = true;
-        document.getElementById("btnProxima").textContent = "Salvando...";
+        // monta a lista pro servidor: um item para cada álbum, com o id e os pontos
+        let lista = [];
+        for (let i = 0; i < 4; i++) {
+            lista.push({ idAlbum: i + 1, pontos: totais[i] });
+        }
 
-        // envia os pontos para a API, que grava na tabela pontuacao
-        fetch("/pontuacoes/salvar", {
+        // envia ao servidor do mesmo jeito do login e do cadastro
+        fetch("/pontuacoes/sallet", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+                "Content-Type": "application/json"
+            },
             body: JSON.stringify({
                 idUsuarioServer: sessionStorage.ID_USUARIO,
-                pontuacoesServer: ranking.map(r => ({ idAlbum: r.idAlbum, pontos: r.pontos }))
+                pontuacoesServer: lista
             })
         }).then(function (resposta) {
-            if (resposta.ok) {
-                // salvou: vai direto para a dashboard
-                window.location.href = "dashboard.html";
-            } else {
-                alert("Não foi possível salvar suas respostas. Tente novamente.");
-                document.getElementById("btnProxima").disabled = false;
-                document.getElementById("btnProxima").textContent = "Ver resultado";
-            }
-        }).catch(function (erro) {
-            console.log("#ERRO: ", erro);
-            alert("Erro de conexão com o servidor.");
-            document.getElementById("btnProxima").disabled = false;
-            document.getElementById("btnProxima").textContent = "Ver resultado";
+            window.location = "dashboard.html";
         });
     }
-
 </script>
 </body>
 
