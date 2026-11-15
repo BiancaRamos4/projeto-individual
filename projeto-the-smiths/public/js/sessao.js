@@ -43,11 +43,31 @@ function exigirLogin() {
 
 // mostra ou esconde os links da navbar conforme o login
 function ajustarNavbar() {
-    var logado = sessionStorage.ID_USUARIO != null;
-    document.querySelectorAll(".so-logado").forEach(function (el) {
-        el.style.display = logado ? "" : "none";
-    });
-    document.querySelectorAll(".so-deslogado").forEach(function (el) {
-        el.style.display = logado ? "none" : "";
-    });
+    // "logado" começa como falso e vira verdadeiro se existir o ID_USUARIO na sessão
+    let logado = false;
+    if (sessionStorage.ID_USUARIO != null) {
+        logado = true;
+    }
+
+    // todos os itens da navbar marcados com cada etiqueta (class)
+    let linksLogado = document.getElementsByClassName("so-logado");
+    let linksDeslogado = document.getElementsByClassName("so-deslogado");
+
+    // itens "so-logado" (Formulário, Dashboard, Sair): aparecem só para quem fez login
+    for (let i = 0; i < linksLogado.length; i++) {
+        if (logado) {
+            linksLogado[i].style.display = "";       // "" = volta ao normal (aparece)
+        } else {
+            linksLogado[i].style.display = "none";   // "none" = some
+        }
+    }
+
+    // itens "so-deslogado" (Login, Cadastro e as barras |): aparecem só para quem NÃO fez login
+    for (let i = 0; i < linksDeslogado.length; i++) {
+        if (logado) {
+            linksDeslogado[i].style.display = "none";
+        } else {
+            linksDeslogado[i].style.display = "";
+        }
+    }
 }

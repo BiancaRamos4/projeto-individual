@@ -1,21 +1,27 @@
 var database = require("../database/config");
 
-// grava (ou atualiza, se a pessoa refizer o formulário) os pontos dos 4 álbuns de uma vez
+// grava os pontos dos álbuns do usuário (se ele já tinha respondido, atualiza)
 function salvar(idUsuario, pontuacoes) {
-    var linhas = pontuacoes.map(function (p) {
-        return `(${Number(idUsuario)}, ${Number(p.idAlbum)}, ${Number(p.pontos)})`;
-    }).join(", ");
+    // monta as linhas do INSERT, uma para cada álbum: (usuario, album, pontos), (usuario, album, pontos), ...
+    var linhas = "";
+    for (var i = 0; i < pontuacoes.length; i++) {
+        if (i > 0) {
+            linhas = linhas + ", ";
+        }
+        // Number() garante que só entra número no SQL
+        linhas = linhas + "(" + Number(idUsuario) + ", " + Number(pontuacoes[i].idAlbum) + ", " + Number(pontuacoes[i].pontos) + ")";
+    }
 
     var instrucaoSql = `
         INSERT INTO pontuacao (fkUsuario, fkAlbum, pontos)
         VALUES ${linhas}
         ON DUPLICATE KEY UPDATE pontos = VALUES(pontos), dtResposta = NOW();
     `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+     // executa e devolve a promessa
     return database.executar(instrucaoSql);
 }
 
-// pontos do usuário, do álbum mais compatível ao menos compatível
+// busca os pontos do usuário, do álbum mais compatível ao menos compatível
 function listar(idUsuario) {
     var instrucaoSql = `
         SELECT a.nome AS album, p.pontos
@@ -24,11 +30,7 @@ function listar(idUsuario) {
         WHERE p.fkUsuario = ${Number(idUsuario)}
         ORDER BY p.pontos DESC;
     `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
 
-module.exports = {
-    salvar,
-    listar
-};
+module.exports = { salvar, listar };
