@@ -46,7 +46,7 @@
       <p class="dash-sub" id="dashSub">Descubra aqui por qual álbum começar a sua melancolia melódica.</p>
 
       <div class="dash-kpis">
-        <div class="dash-kpi">
+        <div class="dash-kpi" onclick="direcionar()">
           <span class="dash-kpi-rotulo">Mais compatível</span>
           <strong class="dash-kpi-valor" id="kpiMais">-</strong>
           <span class="dash-kpi-detalhe" id="kpiMaisPct"></span>
@@ -158,6 +158,21 @@
         };
 
         let myChart = new Chart(document.getElementById("myChart"), config);
+    }
+    function direcionar() {
+      let albumCompativel = kpiMais.innerHTML
+
+      if (albumCompativel == "The Smiths") {
+        window.location.href = "musicas.html#the-smiths";
+      } else if (albumCompativel == "Meat Is Murder") {
+        window.location.href = "musicas.html#the-smiths";
+      } else if (albumCompativel == "The Queen Is Dead") {
+        window.location.href = "musicas.html#the-queen-is-dead"
+      } else if (albumCompativel == "Strangeways, Here We Come") {
+        window.location.href = "musicas.html#strangeways-here-we-come"
+      }
+
+      
     }
 </script>
 </body>

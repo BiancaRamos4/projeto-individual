@@ -671,6 +671,15 @@ input {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  
+}
+
+.dash-kpis :hover {
+  transform: translateY(+3px)
+}
+
+.dash-kpis :active {
+  transform: translateY(-2px)
 }
 
 .dash-kpi-rotulo {
