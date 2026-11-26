@@ -15,7 +15,7 @@ function salvar(idUsuario, pontuacoes) {
     var instrucaoSql = `
         INSERT INTO pontuacao (fkUsuario, fkAlbum, pontos)
         VALUES ${linhas}
-        ON DUPLICATE KEY UPDATE pontos = VALUES(pontos), dtResposta = NOW();
+        ON DUPLICATE KEY UPDATE pontos = VALUES(pontos);
     `;
      // executa e devolve a promessa
     return database.executar(instrucaoSql);

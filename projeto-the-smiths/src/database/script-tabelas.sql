@@ -6,7 +6,18 @@
 comandos para mysql server
 */
 
-USE projeto_the_smiths
+CREATE DATABASE projeto_the_smiths;
+
+USE projeto_the_smiths;
+
+CREATE TABLE usuario (
+id INT PRIMARY KEY AUTO_INCREMENT,
+nome VARCHAR(100) NOT NULL,
+email VARCHAR(100) NOT NULL UNIQUE,
+senha VARCHAR(45) NOT NULL
+);
+
+
 CREATE TABLE album (
   idAlbum INT PRIMARY KEY AUTO_INCREMENT,
   nome VARCHAR(50) NOT NULL,
@@ -34,7 +45,6 @@ CREATE TABLE estilo (
   nome VARCHAR(30) NOT NULL
 );
 
-
 INSERT INTO estilo (nome) VALUES
 ('Romântica'),     -- idEstilo 1
 ('Melancólica'),   -- idEstilo 2
@@ -42,7 +52,7 @@ INSERT INTO estilo (nome) VALUES
 ('Crítica'),       -- idEstilo 4
 ('Dramática');     -- idEstilo 5
 
-CREATE TABLE pontuacao_estilo (
+CREATE TABLE IF NOT EXISTS pontuacao_estilo (
   fkUsuario INT,
   fkEstilo INT,
   pontos INT NOT NULL,
@@ -51,4 +61,5 @@ CREATE TABLE pontuacao_estilo (
   FOREIGN KEY (fkUsuario) REFERENCES usuario(id),
   FOREIGN KEY (fkEstilo) REFERENCES estilo(idEstilo)
 );
+
 

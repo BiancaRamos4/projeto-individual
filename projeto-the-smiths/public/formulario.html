@@ -48,7 +48,7 @@
       <button class="botao" id="btnIniciar" onclick="iniciar()">Começar</button>
 
       <div id="perguntaBox" style="display: none;">
-        <div id="progresso"><div id="barraProgresso"></div></div>
+        
         <p id="infoQuestao">Pergunta <span id="numAtual"></span> de <span id="qtd"></span></p>
 
         <fieldset>
@@ -204,8 +204,6 @@
         numAtual.innerHTML = atual + 1;   // indice 0, mas o usuario está vendo 1
         textoPergunta.innerHTML = perguntas[atual];
 
-        // barra de progresso: pergunta 1 de 8 = 12,5%; pergunta 8 de 8 = 100%
-        barraProgresso.style.width = ((atual + 1) / perguntas.length * 100) + "%";
 
         // 4 alternativas
         for (let i = 0; i < 4; i++) {

@@ -186,7 +186,7 @@
 
     function montarRadar(estilos) {
 
-      // 1) descobre qual estilo tem mais pontos (começa pelo primeiro e vai comparando com os outros)
+      //descobre qual estilo tem mais pontos (começa pelo primeiro e vai comparando com os outros)
       let maior = estilos[0];
       for (let i = 1; i < estilos.length; i++) {
         if (estilos[i].pontos > maior.pontos) {
@@ -195,7 +195,7 @@
       }
       estiloDestaque.innerHTML = "O estilo que mais combina com você é <b>" + maior.estilo + "</b> (" + maior.pontos + " pontos).";
 
-      // 2) listas para o gráfico: o nome e os pontos de cada estilo
+      //listas para o gráfico: o nome e os pontos de cada estilo
       let nomes = [];
       let valores = [];
       for (let i = 0; i < estilos.length; i++) {
@@ -203,7 +203,7 @@
         valores.push(estilos[i].pontos);
       }
 
-      // 3) gráfico de radar: cada estilo é um "raio", e quanto mais longe do centro, mais pontos
+      //gráfico de radar: cada estilo é um "raio", e quanto mais longe do centro, mais pontos
       let dadosRadar = {
         labels: nomes,
         datasets: [{
