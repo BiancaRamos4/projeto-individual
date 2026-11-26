@@ -671,15 +671,17 @@ input {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  
+  transition: transform 0.2s;
 }
 
-.dash-kpis :hover {
-  transform: translateY(+3px)
+
+
+.dash-kpi:hover {
+  transform: translateY(3px);
 }
 
-.dash-kpis :active {
-  transform: translateY(-2px)
+.dash-kpi:active {
+  transform: translateY(-2px);
 }
 
 .dash-kpi-rotulo {
@@ -700,7 +702,7 @@ input {
 
 .dash-kpi-detalhe {
   font-family: "Libre Franklin", sans-serif;
-  font-size: 14px;
+  font-size: 18px;
   color: #55524D;
 }
 
@@ -728,13 +730,14 @@ input {
 .dash-acoes {
   display: flex;
   justify-content: center;
-  margin-top: 8px;
+  margin-top: 20px;
 }
 
 .dash-acoes .botao {
   width: auto;
   height: auto;
   padding: 8px 18px;
+  margin: 0 auto;
 }
 
 .dash-acoes .botao:hover {
@@ -755,6 +758,28 @@ input {
   .dash-grafico {
     height: 300px;
   }
+}
+
+.dash-card + .dash-card {
+  margin-top: 20px;
+}
+
+/* a frase "O estilo que mais combina com você..." dentro do card do radar */
+.dash-card .dash-sub {
+  margin: 0 0 12px;
+}
+
+/* gráficos lado a lado */
+.dash-graficos {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+/* cada card precisa poder encolher, senão o Chart.js estica a coluna */
+.dash-graficos .dash-card {
+  min-width: 0;
 }
 
 /* Músicas */

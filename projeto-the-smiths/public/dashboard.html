@@ -20,6 +20,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <script>exigirLogin();</script>
 </head>
+
 <body>
   <div class="header">
     <div class="container">
@@ -40,34 +41,46 @@
     </div>
   </div>
 
-   <section class="dash-smiths">
+  <section class="dash-smiths">
     <div class="dash-container">
       <h2 class="dash-titulo">Olá, <span id="nomeUsuario"></span>!</h2>
       <p class="dash-sub" id="dashSub">Descubra aqui por qual álbum começar a sua melancolia melódica.</p>
 
       <div class="dash-kpis">
         <div class="dash-kpi" onclick="direcionar()">
-          <span class="dash-kpi-rotulo">Mais compatível</span>
+          <span class="dash-kpi-rotulo">Álbum mais compatível</span>
           <strong class="dash-kpi-valor" id="kpiMais">-</strong>
           <span class="dash-kpi-detalhe" id="kpiMaisPct"></span>
         </div>
-        <div class="dash-kpi">
-          <span class="dash-kpi-rotulo">Menos compatível</span>
+        <div class="dash-kpi" onclick="direcionarMenos()">
+          <span class="dash-kpi-rotulo">Álbum menos compatível</span>
           <strong class="dash-kpi-valor" id="kpiMenos">-</strong>
           <span class="dash-kpi-detalhe" id="kpiMenosPct"></span>
         </div>
       </div>
 
+      <div class="dash-graficos">
       <div class="dash-card">
         <h3>Ranking dos álbuns</h3>
         <div class="dash-grafico">
-          <canvas id="myChart" role="img" aria-label="Gráfico de barras com a pontuação de cada álbum do The Smiths, do mais ao menos compatível"></canvas>
+          <canvas id="myChart" role="img"
+            aria-label="Gráfico de barras com a pontuação de cada álbum do The Smiths, do mais ao menos compatível"></canvas>
         </div>
       </div>
 
-      <div class="dash-acoes">
-        <button class="botao" onclick="window.location.href = 'formulario.html'">Refazer formulário</button>
+      <div class="dash-card">
+        <h3>Seu perfil musical</h3>
+        <p class="dash-sub" id="estiloDestaque"></p>
+        <div class="dash-grafico" id="caixaRadar">
+          <canvas id="graficoRadar" role="img"
+            aria-label="Gráfico de radar com a pontuação de cada estilo de música: romântica, melancólica, alegre, crítica e dramática"></canvas>
+        </div>
       </div>
+
+    </div>
+    <div class="dash-acoes">
+      <button class="botao" onclick="window.location.href = 'formulario.html'">Refazer formulário</button>
+    </div>
     </div>
   </section>
 
@@ -79,102 +92,187 @@
       <h4>&copy; 2026 The Smiths. All rights reserved.</h4>
     </div>
   </div>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1"></script>
-<script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1"></script>
+  <script>
+    Chart.defaults.color = "#373633";
+    Chart.defaults.font.family = '"Libre Franklin", sans-serif';
+
     // escreve o nome da pessoa (guardado no login)
     nomeUsuario.innerHTML = sessionStorage.NOME_USUARIO;
 
     // pede ao servidor os pontos desta pessoa (mesmo jeito do login)
     // o servidor devolve a lista ordenada do álbum mais compatível ao menos compatível
     fetch("/pontuacoes/listar/" + sessionStorage.ID_USUARIO).then(function (resposta) {
-        resposta.json().then(function (dados) {
-            montarDashboard(dados);
-        });
+      resposta.json().then(function (dados) {
+        montarDashboard(dados);
+      });
     });
+
+    fetch("/pontuacoes/estilos/" + sessionStorage.ID_USUARIO).then(function (resposta) {
+      resposta.json().then(function (estilos) {
+        montarRadar(estilos);
+      });
+    });
+
+
 
     // dados é uma lista assim: [ { album: "The Smiths", pontos: 15 }, etc]
     function montarDashboard(dados) {
 
-        // soma de todos os pontos (sempre da 48, 6*8, pq cada alternativa distribui 6 pontos
-        // entre os 4 álbuns e são 8 perguntas)
-        let soma = 0;
-        for (let i = 0; i < dados.length; i++) {
-            soma = soma + dados[i].pontos;
+      // soma de todos os pontos (sempre da 48, 6*8, pq cada alternativa distribui 6 pontos
+      // entre os 4 álbuns e são 8 perguntas)
+      let soma = 0;
+      for (let i = 0; i < dados.length; i++) {
+        soma = soma + dados[i].pontos;
+      }
+
+      // 2) kpi: o primeiro da lista é o mais compatível e o ultimo é o menos compatível
+      let mais = dados[0];
+      let menos = dados[dados.length - 1];
+
+      // porcentagem = pontos / total * 100 (Math.round arredonda para um número inteiro)
+      let maisPorcentagem = Math.round(mais.pontos / soma * 100);
+      let menosPorcentagem = Math.round(menos.pontos / soma * 100);
+
+      kpiMais.innerHTML = mais.album;
+      kpiMaisPct.innerHTML = mais.pontos + " pontos (" + maisPorcentagem + "%)";
+      kpiMenos.innerHTML = menos.album;
+      kpiMenosPct.innerHTML = menos.pontos + " pontos (" + menosPorcentagem + "%)";
+
+      // listas pro grafico: nome com porcentagem e pontos de cada album
+      // duas listas separadas: os nomes das barras e os valores
+      let nomes = [];
+      let valores = [];
+      for (let i = 0; i < dados.length; i++) {
+        let porcentagem = Math.round(dados[i].pontos / soma * 100);
+        nomes.push(dados[i].album + " (" + porcentagem + "%)");
+        valores.push(dados[i].pontos);
+      }
+
+      // mesma cor e fonte do resto
+      Chart.defaults.color = "#373633";
+      Chart.defaults.font.family = '"Libre Franklin", sans-serif';
+
+      // cores pra cada barrinha
+      let cores = ["#373633", "#55524D", "#7D7566", "#A49A85"];
+
+      let data = {
+        labels: nomes,
+        datasets: [{
+          label: "Pontos",
+          backgroundColor: cores,
+          data: valores,
+          borderRadius: 6
+        }]
+      };
+
+      let config = {
+        type: "bar",
+        data: data,
+        options: {
+          indexAxis: "y",              // horizontal
+          maintainAspectRatio: false,  // grafico ocupa a altura da caixa toda
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            x: { beginAtZero: true }
+          }
         }
+      };
 
-        // 2) kpi: o primeiro da lista é o mais compatível e o ultimo é o menos compatível
-        let mais = dados[0];
-        let menos = dados[dados.length - 1];
-
-        // porcentagem = pontos / total * 100 (Math.round arredonda para um número inteiro)
-        let maisPorcentagem = Math.round(mais.pontos / soma * 100);
-        let menosPorcentagem = Math.round(menos.pontos / soma * 100);
-
-        kpiMais.innerHTML = mais.album;
-        kpiMaisPct.innerHTML = mais.pontos + " pontos (" + maisPorcentagem + "%)";
-        kpiMenos.innerHTML = menos.album;
-        kpiMenosPct.innerHTML = menos.pontos + " pontos (" + menosPorcentagem + "%)";
-
-        // listas pro grafico: nome com porcentagem e pontos de cada album
-        // duas listas separadas: os nomes das barras e os valores
-        let nomes = [];
-        let valores = [];
-        for (let i = 0; i < dados.length; i++) {
-            let porcentagem = Math.round(dados[i].pontos / soma * 100);
-            nomes.push(dados[i].album + " (" + porcentagem + "%)");
-            valores.push(dados[i].pontos);
-        }
-
-        // mesma cor e fonte do resto
-        Chart.defaults.color = "#373633";
-        Chart.defaults.font.family = '"Libre Franklin", sans-serif';
-
-        // cores pra cada barrinha
-        let cores = ["#373633", "#55524D", "#7D7566", "#A49A85"];
-
-        let data = {
-            labels: nomes,
-            datasets: [{
-                label: "Pontos",
-                backgroundColor: cores,
-                data: valores,
-                borderRadius: 6
-            }]
-        };
-
-        let config = {
-            type: "bar",
-            data: data,
-            options: {
-                indexAxis: "y",              // horizontal
-                maintainAspectRatio: false,  // grafico ocupa a altura da caixa toda
-                plugins: {
-                    legend: { display: false }
-                },
-                scales: {
-                    x: { beginAtZero: true }
-                }
-            }
-        };
-
-        let myChart = new Chart(document.getElementById("myChart"), config);
+      let myChart = new Chart(document.getElementById("myChart"), config);
     }
+
+    function montarRadar(estilos) {
+
+      // 1) descobre qual estilo tem mais pontos (começa pelo primeiro e vai comparando com os outros)
+      let maior = estilos[0];
+      for (let i = 1; i < estilos.length; i++) {
+        if (estilos[i].pontos > maior.pontos) {
+          maior = estilos[i];
+        }
+      }
+      estiloDestaque.innerHTML = "O estilo que mais combina com você é <b>" + maior.estilo + "</b> (" + maior.pontos + " pontos).";
+
+      // 2) listas para o gráfico: o nome e os pontos de cada estilo
+      let nomes = [];
+      let valores = [];
+      for (let i = 0; i < estilos.length; i++) {
+        nomes.push(estilos[i].estilo);
+        valores.push(estilos[i].pontos);
+      }
+
+      // 3) gráfico de radar: cada estilo é um "raio", e quanto mais longe do centro, mais pontos
+      let dadosRadar = {
+        labels: nomes,
+        datasets: [{
+          label: "Seu perfil",
+          data: valores,
+          backgroundColor: "rgba(55, 54, 51, 0.25)",   // rgba = cor com transparência (vermelho, verde, azul, opacidade de 0 a 1)
+          borderColor: "#373633",
+          pointBackgroundColor: "#373633",
+          borderWidth: 2
+        }]
+      };
+
+      let configRadar = {
+        type: "radar",
+        data: dadosRadar,
+        options: {
+          maintainAspectRatio: false,  // ocupa a altura da caixa (340px no CSS)
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            r: {                     // no radar o eixo se chama "r" (de raio), e não "x"
+              beginAtZero: true,
+              ticks: {  display: false },   // números inteiros e sem a caixinha branca atrás
+              grid: { color: "rgba(55, 54, 51, 0.2)" },            // linhas em formato de teia
+              angleLines: { color: "rgba(55, 54, 51, 0.2)" },      // linhas que saem do centro
+              pointLabels: { font: { size: 13 } }                  // tamanho do nome de cada estilo
+            }
+          }
+        }
+      };
+
+      let meuRadar = new Chart(document.getElementById("graficoRadar"), configRadar);
+    }
+
     function direcionar() {
       let albumCompativel = kpiMais.innerHTML
+     
 
       if (albumCompativel == "The Smiths") {
         window.location.href = "musicas.html#the-smiths";
       } else if (albumCompativel == "Meat Is Murder") {
-        window.location.href = "musicas.html#the-smiths";
+        window.location.href = "musicas.html#meat-is-murder";
       } else if (albumCompativel == "The Queen Is Dead") {
         window.location.href = "musicas.html#the-queen-is-dead"
       } else if (albumCompativel == "Strangeways, Here We Come") {
         window.location.href = "musicas.html#strangeways-here-we-come"
       }
 
+
+
+    }
+    function direcionarMenos() {
+       let albumMenos = kpiMenos.innerHTML
+       
+       if (albumMenos == "The Smiths") {
+        window.location.href = "musicas.html#the-smiths";
+      } else if (albumMenos == "Meat Is Murder") {
+        window.location.href = "musicas.html#meat-is-murder";
+      } else if (albumMenos == "The Queen Is Dead") {
+        window.location.href = "musicas.html#the-queen-is-dead"
+      } else if (albumMenos == "Strangeways, Here We Come") {
+        window.location.href = "musicas.html#strangeways-here-we-come"
+      }
+
+
       
     }
-</script>
+  </script>
 </body>
 
 </html>

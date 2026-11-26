@@ -28,3 +28,27 @@ CREATE TABLE pontuacao (
   FOREIGN KEY (fkUsuario) REFERENCES usuario(id),
   FOREIGN KEY (fkAlbum) REFERENCES album(idAlbum)
 );
+
+CREATE TABLE estilo (
+  idEstilo INT PRIMARY KEY AUTO_INCREMENT,
+  nome VARCHAR(30) NOT NULL
+);
+
+
+INSERT INTO estilo (nome) VALUES
+('Romântica'),     -- idEstilo 1
+('Melancólica'),   -- idEstilo 2
+('Alegre'),        -- idEstilo 3
+('Crítica'),       -- idEstilo 4
+('Dramática');     -- idEstilo 5
+
+CREATE TABLE pontuacao_estilo (
+  fkUsuario INT,
+  fkEstilo INT,
+  pontos INT NOT NULL,
+  dtResposta DATETIME DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (fkUsuario, fkEstilo),
+  FOREIGN KEY (fkUsuario) REFERENCES usuario(id),
+  FOREIGN KEY (fkEstilo) REFERENCES estilo(idEstilo)
+);
+
